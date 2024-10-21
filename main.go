@@ -6,7 +6,22 @@ import (
 	"time"
 )
 
-func generateRandomNumbers() []int {
+func generateRandom5x5x5Array() [5][5][5]int {
+	var arr [5][5][5]int
+	randomNumbers := generateRandomNumbers()
+	index := 0
+	for i := 0; i < 5; i++ {
+		for j := 0; j < 5; j++ {
+			for k := 0; k < 5; k++ {
+				arr[i][j][k] = randomNumbers[index]
+				index++
+			}
+		}
+	}
+	return arr
+}
+
+func generateRandomNumbers() []int { // fungsi awal utk ngegenerate random state
 	numbers := make([]int, 125)
 	for i := 0; i < 125; i++ {
 		numbers[i] = i + 1
@@ -18,6 +33,65 @@ func generateRandomNumbers() []int {
 	})
 
 	return numbers
+}
+
+func printCube(cube [5][5][5]int) {
+	for i := 0; i < 5; i++ {
+		fmt.Printf("Layer %d:\n", i+1)
+		for j := 0; j < 5; j++ {
+			for k := 0; k < 5; k++ {
+				fmt.Printf("%4d ", cube[i][j][k])
+			}
+			fmt.Println()
+		}
+		fmt.Println()
+	}
+}
+
+func swapRandom(cube [5][5][5]int) [5][5][5]int { // fungsi utk ngeswap dua angka dgn posisi random
+	rand.Seed(time.Now().UnixNano())
+
+	x1, y1, z1 := rand.Intn(5), rand.Intn(5), rand.Intn(5)
+	x2, y2, z2 := rand.Intn(5), rand.Intn(5), rand.Intn(5)
+
+	cube[x1][y1][z1], cube[x2][y2][z2] = cube[x2][y2][z2], cube[x1][y1][z1]
+
+	return cube
+}
+
+func stochasticHillClimbing(cube *[5][5][5]int, NMax int) {
+	currentObjectiveFunction := calculateObjectiveFunction(*cube)
+	proceed := true
+	for currentObjectiveFunction < 109 {
+		stochasticHillClimbingHelper(cube, NMax, currentObjectiveFunction, &proceed)
+		if !proceed {
+			printCube(*cube)
+			fmt.Println("fail")
+			break
+		}
+		currentObjectiveFunction = calculateObjectiveFunction(*cube)
+		// fmt.Println(currentObjectiveFunction)
+	}
+
+	if currentObjectiveFunction == 109 {
+		printCube(*cube)
+		fmt.Println("success")
+	}
+}
+
+func stochasticHillClimbingHelper(cube *[5][5][5]int, NMax int, currentObjectiveFunction int, proceed *bool) {
+	for i := 0; i <= NMax; i++ {
+		if i == NMax {
+			*proceed = false
+			break
+		}
+
+		tempCube := swapRandom(*cube)
+		if calculateObjectiveFunction(tempCube) > currentObjectiveFunction {
+			*cube = tempCube
+			break
+		}
+	}
 }
 
 func calculateObjectiveFunction(cube [5][5][5]int) int {
@@ -249,30 +323,7 @@ func main() {
 	// 	},
 	// }
 
-	var arr [5][5][5]int
-
-	randomNumbers := generateRandomNumbers()
-
-	index := 0
-	for i := 0; i < 5; i++ {
-		for j := 0; j < 5; j++ {
-			for k := 0; k < 5; k++ {
-				arr[i][j][k] = randomNumbers[index]
-				index++
-			}
-		}
-	}
-
-	for i := 0; i < 5; i++ {
-		fmt.Printf("Layer %d:\n", i+1)
-		for j := 0; j < 5; j++ {
-			for k := 0; k < 5; k++ {
-				fmt.Printf("%4d ", arr[i][j][k])
-			}
-			fmt.Println()
-		}
-		fmt.Println()
-	}
-
-	fmt.Println(calculateObjectiveFunction(arr))
+	arr := generateRandom5x5x5Array()
+	printCube(arr)
+	stochasticHillClimbing(&arr, 500000)
 }
