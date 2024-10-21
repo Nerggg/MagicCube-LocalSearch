@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func generateRandom5x5x5Array() [5][5][5]int {
+func generateRandom5x5x5Array() [5][5][5]int { // fungsi awal utk ngegenerate random state
 	var arr [5][5][5]int
 	randomNumbers := generateRandomNumbers()
 	index := 0
@@ -21,7 +21,7 @@ func generateRandom5x5x5Array() [5][5][5]int {
 	return arr
 }
 
-func generateRandomNumbers() []int { // fungsi awal utk ngegenerate random state
+func generateRandomNumbers() []int {
 	numbers := make([]int, 125)
 	for i := 0; i < 125; i++ {
 		numbers[i] = i + 1
@@ -94,7 +94,7 @@ func stochasticHillClimbingHelper(cube *[5][5][5]int, NMax int, currentObjective
 	}
 }
 
-func calculateObjectiveFunction(cube [5][5][5]int) int {
+func calculateObjectiveFunction(cube [5][5][5]int) int { // ngitung objective function
 	result := 0
 
 	// iterasi bagian pertama
