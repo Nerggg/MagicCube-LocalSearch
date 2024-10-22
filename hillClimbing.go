@@ -7,14 +7,13 @@ func steepestAscentHillClimbing(cube *[][][]int) {
 	for currentObjectiveFunction < 109 {
 		tempCube := generateMaximumSuccessor(*cube)
 		tempObjectiveFunction := calculateObjectiveFunction(tempCube)
-		if tempObjectiveFunction > currentObjectiveFunction {
-			*cube = tempCube
-			currentObjectiveFunction = tempObjectiveFunction
-		} else {
+		if tempObjectiveFunction <= currentObjectiveFunction {
 			printCube(*cube)
 			fmt.Println("fail")
 			break
 		}
+		*cube = tempCube
+		currentObjectiveFunction = tempObjectiveFunction
 	}
 	if currentObjectiveFunction == 109 {
 		printCube(*cube)
