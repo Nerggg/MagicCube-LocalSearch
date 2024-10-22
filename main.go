@@ -1,7 +1,7 @@
 package main
 
 func main() {
-	// array := [5][5][5]int{ // ini array yg udah perfect magic cube
+	// arr := [][][]int{ // ini array yg udah perfect magic cube
 	// 	{
 	// 		{25, 16, 80, 104, 90},
 	// 		{115, 98, 4, 1, 97},
@@ -31,7 +31,7 @@ func main() {
 	// 		{56, 120, 55, 49, 35},
 	// 	},
 	// 	{
-	// 		{121, 108, 7, 20, 59},
+	// 		{121, 7, 108, 20, 59},
 	// 		{29, 28, 122, 125, 11},
 	// 		{51, 15, 41, 124, 84},
 	// 		{78, 54, 99, 24, 60},
@@ -41,5 +41,6 @@ func main() {
 
 	var arr [][][]int = generateRandom5x5x5Array()
 	printCube(arr)
-	stochasticHillClimbing(&arr, 500000)
+	// stochasticHillClimbing(&arr, 500000)
+	// steepestAscentHillClimbing(&arr)
 }

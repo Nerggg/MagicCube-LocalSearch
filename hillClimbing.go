@@ -2,6 +2,26 @@ package main
 
 import "fmt"
 
+func steepestAscentHillClimbing(cube *[][][]int) {
+	currentObjectiveFunction := calculateObjectiveFunction(*cube)
+	for currentObjectiveFunction < 109 {
+		tempCube := generateMaximumSuccessor(*cube)
+		tempObjectiveFunction := calculateObjectiveFunction(tempCube)
+		if tempObjectiveFunction > currentObjectiveFunction {
+			*cube = tempCube
+			currentObjectiveFunction = tempObjectiveFunction
+		} else {
+			printCube(*cube)
+			fmt.Println("fail")
+			break
+		}
+	}
+	if currentObjectiveFunction == 109 {
+		printCube(*cube)
+		fmt.Print("success")
+	}
+}
+
 func stochasticHillClimbing(cube *[][][]int, NMax int) {
 	currentObjectiveFunction := calculateObjectiveFunction(*cube)
 	proceed := true
