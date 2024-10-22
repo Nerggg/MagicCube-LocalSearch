@@ -14,10 +14,31 @@ func steepestAscentHillClimbing(cube *[][][]int) {
 		}
 		*cube = tempCube
 		currentObjectiveFunction = tempObjectiveFunction
+		fmt.Println(currentObjectiveFunction)
 	}
 	if currentObjectiveFunction == 109 {
 		printCube(*cube)
-		fmt.Print("success")
+		fmt.Println("success")
+	}
+}
+
+func sidewaysMoveHillClimbing(cube *[][][]int) {
+	currentObjectiveFunction := calculateObjectiveFunction(*cube)
+	for currentObjectiveFunction < 109 {
+		tempCube := generateMaximumSuccessor(*cube)
+		tempObjectiveFunction := calculateObjectiveFunction(tempCube)
+		if tempObjectiveFunction < currentObjectiveFunction {
+			printCube(*cube)
+			fmt.Println("fail")
+			break
+		}
+		*cube = tempCube
+		currentObjectiveFunction = tempObjectiveFunction
+		fmt.Println(currentObjectiveFunction)
+	}
+	if currentObjectiveFunction == 109 {
+		printCube(*cube)
+		fmt.Println("success")
 	}
 }
 
@@ -32,7 +53,7 @@ func stochasticHillClimbing(cube *[][][]int, NMax int) {
 			break
 		}
 		currentObjectiveFunction = calculateObjectiveFunction(*cube)
-		// fmt.Println(currentObjectiveFunction)
+		fmt.Println(currentObjectiveFunction)
 	}
 
 	if currentObjectiveFunction == 109 {

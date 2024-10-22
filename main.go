@@ -43,4 +43,5 @@ func main() {
 	printCube(arr)
 	// stochasticHillClimbing(&arr, 500000)
 	// steepestAscentHillClimbing(&arr)
+	// sidewaysMoveHillClimbing(&arr)
 }
