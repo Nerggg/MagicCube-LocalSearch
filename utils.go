@@ -6,8 +6,24 @@ import (
 	"time"
 )
 
-func generateRandom5x5x5Array() [5][5][5]int { // fungsi awal utk ngegenerate random state
-	var arr [5][5][5]int
+// DAFTAR FUNGSI YANG ADA DISINI
+// generateRandom5x5x5Array => ngegenerate random initial state, ngereturn array 3d
+// printCube => ngeprint array 3d
+// swapRandom => nukar 2 angka dalam posisi random dalam sebuah array 3d
+// calculateObjectiveFunction => ngitung objective function, ngereturn int
+// generateSuccessor => cari semua suksesor yg mungkin, ngereturn array of array 3d
+// copy3DArray => nyalin array 3d, ngereturn array 3d baru yg sama
+// generateMaximumSuccessor => cari satu suksesor dgn objective function tertinggi, ngereturn array 3d
+
+func generateRandom5x5x5Array() [][][]int {
+	arr := make([][][]int, 5)
+	for i := range arr {
+		arr[i] = make([][]int, 5)
+		for j := range arr[i] {
+			arr[i][j] = make([]int, 5)
+		}
+	}
+
 	randomNumbers := generateRandomNumbers()
 	index := 0
 	for i := 0; i < 5; i++ {
@@ -35,11 +51,11 @@ func generateRandomNumbers() []int {
 	return numbers
 }
 
-func printCube(cube [5][5][5]int) {
-	for i := 0; i < 5; i++ {
+func printCube(cube [][][]int) {
+	for i := 0; i < len(cube); i++ {
 		fmt.Printf("Layer %d:\n", i+1)
-		for j := 0; j < 5; j++ {
-			for k := 0; k < 5; k++ {
+		for j := 0; j < len(cube); j++ {
+			for k := 0; k < len(cube); k++ {
 				fmt.Printf("%4d ", cube[i][j][k])
 			}
 			fmt.Println()
@@ -48,18 +64,18 @@ func printCube(cube [5][5][5]int) {
 	}
 }
 
-func swapRandom(cube [5][5][5]int) [5][5][5]int { // fungsi utk ngeswap dua angka dgn posisi random
+func swapRandom(cube [][][]int) [][][]int { // fungsi utk ngeswap dua angka dgn posisi random
 	rand.Seed(time.Now().UnixNano())
 
-	x1, y1, z1 := rand.Intn(5), rand.Intn(5), rand.Intn(5)
-	x2, y2, z2 := rand.Intn(5), rand.Intn(5), rand.Intn(5)
+	x1, y1, z1 := rand.Intn(len(cube)), rand.Intn(len(cube)), rand.Intn(len(cube))
+	x2, y2, z2 := rand.Intn(len(cube)), rand.Intn(len(cube)), rand.Intn(len(cube))
 
 	cube[x1][y1][z1], cube[x2][y2][z2] = cube[x2][y2][z2], cube[x1][y1][z1]
 
 	return cube
 }
 
-func calculateObjectiveFunction(cube [5][5][5]int) int { // ngitung objective function
+func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective function
 	result := 0
 
 	// iterasi bagian pertama
@@ -245,6 +261,96 @@ func calculateObjectiveFunction(cube [5][5][5]int) int { // ngitung objective fu
 	}
 	if temp == 315 {
 		result++
+	}
+	return result
+}
+
+func generateSuccessor(originalArr [][][]int) [][][][]int {
+	store := [][]int{}
+	result := [][][][]int{}
+
+	for i1 := 0; i1 < len(originalArr); i1++ {
+		for j1 := 0; j1 < len(originalArr[i1]); j1++ {
+			for k1 := 0; k1 < len(originalArr[j1]); k1++ {
+				for i2 := 0; i2 < len(originalArr); i2++ {
+					for j2 := 0; j2 < len(originalArr[i2]); j2++ {
+						for k2 := 0; k2 < len(originalArr[j2]); k2++ {
+							if (i1 == i2 && j1 == j2 && k1 == k2) || inStore(store, i1, j1, k1, i2, j2, k2) {
+								continue
+							}
+
+							arr := copy3DArray(originalArr)
+							arr[i1][j1][k1], arr[i2][j2][k2] = arr[i2][j2][k2], arr[i1][j1][k1]
+							result = append(result, arr)
+							store = append(store, []int{i1, j1, k1, i2, j2, k2})
+							store = append(store, []int{i2, j2, k2, i1, j1, k1})
+						}
+					}
+				}
+			}
+		}
+	}
+	return result
+}
+
+func inStore(store [][]int, i1, j1, k1, i2, j2, k2 int) bool {
+	for _, s := range store {
+		if s[0] == i1 && s[1] == j1 && s[2] == k1 && s[3] == i2 && s[4] == j2 && s[5] == k2 {
+			return true
+		}
+	}
+	return false
+}
+
+func copy3DArray(original [][][]int) [][][]int {
+	xLen := len(original)
+	yLen := len(original[0])
+	zLen := len(original[0][0])
+
+	copyArray := make([][][]int, xLen)
+	for i := range original {
+		copyArray[i] = make([][]int, yLen)
+		for j := range original[i] {
+			copyArray[i][j] = make([]int, zLen)
+			for k := range original[i][j] {
+				copyArray[i][j][k] = original[i][j][k]
+			}
+		}
+	}
+
+	return copyArray
+}
+
+func generateMaximumSuccessor(originalArr [][][]int) [][][]int {
+	store := [][]int{}
+	result := [][][]int{}
+	maxTemp := 0
+
+	for i1 := 0; i1 < len(originalArr); i1++ {
+		for j1 := 0; j1 < len(originalArr[i1]); j1++ {
+			for k1 := 0; k1 < len(originalArr[j1]); k1++ {
+				for i2 := 0; i2 < len(originalArr); i2++ {
+					for j2 := 0; j2 < len(originalArr[i2]); j2++ {
+						for k2 := 0; k2 < len(originalArr[j2]); k2++ {
+							if (i1 == i2 && j1 == j2 && k1 == k2) || inStore(store, i1, j1, k1, i2, j2, k2) {
+								continue
+							}
+
+							arr := copy3DArray(originalArr)
+							arr[i1][j1][k1], arr[i2][j2][k2] = arr[i2][j2][k2], arr[i1][j1][k1]
+							store = append(store, []int{i1, j1, k1, i2, j2, k2})
+							store = append(store, []int{i2, j2, k2, i1, j1, k1})
+
+							currentTemp := calculateObjectiveFunction(arr)
+							if currentTemp > maxTemp {
+								result = arr
+								maxTemp = currentTemp
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	return result
 }

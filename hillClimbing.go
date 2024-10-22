@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func stochasticHillClimbing(cube *[5][5][5]int, NMax int) {
+func stochasticHillClimbing(cube *[][][]int, NMax int) {
 	currentObjectiveFunction := calculateObjectiveFunction(*cube)
 	proceed := true
 	for currentObjectiveFunction < 109 {
@@ -22,7 +22,7 @@ func stochasticHillClimbing(cube *[5][5][5]int, NMax int) {
 	}
 }
 
-func stochasticHillClimbingHelper(cube *[5][5][5]int, NMax int, currentObjectiveFunction int, proceed *bool) {
+func stochasticHillClimbingHelper(cube *[][][]int, NMax int, currentObjectiveFunction int, proceed *bool) {
 	i := 0
 	for i < NMax {
 		tempCube := swapRandom(*cube)

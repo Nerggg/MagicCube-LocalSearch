@@ -39,7 +39,7 @@ func main() {
 	// 	},
 	// }
 
-	arr := generateRandom5x5x5Array()
+	var arr [][][]int = generateRandom5x5x5Array()
 	printCube(arr)
 	stochasticHillClimbing(&arr, 500000)
 }
