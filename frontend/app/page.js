@@ -1,27 +1,103 @@
 "use client"
 import React from 'react';
+import { useState } from 'react';
 import Navbar from '../components/navbar.js';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import Cube from '../components/Cube';
+import CubeMatrix from '../components/CubeMatrix.js';
 
 export default function Home() {
+  const matrixData = [
+    [
+      [25, 16, 80, 104, 90],
+      [115, 98, 4, 1, 97],
+      [42, 111, 85, 2, 75],
+      [66, 72, 27, 102, 48],
+      [67, 18, 119, 106, 5],
+    ],
+    [
+      [91, 77, 71, 6, 70],
+      [52, 64, 117, 69, 13],
+      [30, 118, 21, 123, 23],
+      [26, 39, 92, 44, 114],
+      [116, 17, 14, 73, 95],
+    ],
+    [
+      [47, 61, 45, 76, 86],
+      [107, 43, 38, 33, 94],
+      [89, 68, 63, 58, 37],
+      [32, 93, 88, 83, 19],
+      [40, 50, 81, 65, 79],
+    ],
+    [
+      [31, 53, 112, 109, 10],
+      [12, 82, 34, 87, 100],
+      [103, 3, 105, 8, 96],
+      [113, 57, 9, 62, 74],
+      [56, 120, 55, 49, 35],
+    ],
+    [
+      [121, 7, 108, 20, 59],
+      [29, 28, 122, 125, 11],
+      [51, 15, 41, 124, 84],
+      [78, 54, 99, 24, 60],
+      [36, 110, 46, 22, 101],
+    ],
+  ];
+
+  const [separateX, setSeparateX] = useState(1.1);
+  const [separateY, setSeparateY] = useState(1.1);
+  const [separateZ, setSeparateZ] = useState(1.1);
+
+
   return (
         <div className="flex flex-col w-full items-center justify-center">
         <Navbar/>
-        <div style={{ height: '100vh', width:'100vw' }}>
-            <Canvas>
-              {/* Tambahkan pencahayaan */}
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[5, 5, 5]} intensity={1} />
-              
-              {/* Tambahkan kubus */}
-              <Cube />
-              
-              {/* Tambahkan kontrol rotasi */}
-              <OrbitControls enableZoom={false} />
-            </Canvas>
-          </div>
+        <div style={{ height: '80vh', width:'80vw' }}>
+        <Canvas>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={1} />
+          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} />
+          <OrbitControls enableZoom={true} />
+        </Canvas>
+      </div>
+
+      {/* Kontrol slider untuk pemisahan di X, Y, Z */}
+      <div style={{ padding: '20px' }}>
+        <div>
+          <label>Separate by X:</label>
+          <input
+            type="range"
+            min="1.0"
+            max="2.5"
+            step="0.1"
+            value={separateX}
+            onChange={(e) => setSeparateX(parseFloat(e.target.value))}
+          />
+        </div>
+        <div>
+          <label>Separate by Y:</label>
+          <input
+            type="range"
+            min="1.0"
+            max="2.5"
+            step="0.1"
+            value={separateY}
+            onChange={(e) => setSeparateY(parseFloat(e.target.value))}
+          />
+        </div>
+        <div>
+          <label>Separate by Z:</label>
+          <input
+            type="range"
+            min="1.0"
+            max="2.5"
+            step="0.1"
+            value={separateZ}
+            onChange={(e) => setSeparateZ(parseFloat(e.target.value))}
+          />
+        </div>
+      </div>
         {/*Start point What is WikiRace Card*/}
         <div className='rounded-[10px] my-2 w-[70%] h-fit relative border-2 border-white mx-4 mt-[50px]'>
             <div className='p-4 flex flex-col text-white'>
