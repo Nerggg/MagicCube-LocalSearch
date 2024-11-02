@@ -40,43 +40,6 @@ const generateRandomMatrixData = (rows, cols, depth, minValue, maxValue) => {
   return result;
 };
 
-const matrixData = [
-  [
-    [25, 16, 80, 104, 90],
-    [115, 98, 4, 1, 97],
-    [42, 111, 85, 2, 75],
-    [66, 72, 27, 102, 48],
-    [67, 18, 119, 106, 5],
-  ],
-  [
-    [91, 77, 71, 6, 70],
-    [52, 64, 117, 69, 13],
-    [30, 118, 21, 123, 23],
-    [26, 39, 92, 44, 114],
-    [116, 17, 14, 73, 95],
-  ],
-  [
-    [47, 61, 45, 76, 86],
-    [107, 43, 38, 33, 94],
-    [89, 68, 63, 58, 37],
-    [32, 93, 88, 83, 19],
-    [40, 50, 81, 65, 79],
-  ],
-  [
-    [31, 53, 112, 109, 10],
-    [12, 82, 34, 87, 100],
-    [103, 3, 105, 8, 96],
-    [113, 57, 9, 62, 74],
-    [56, 120, 55, 49, 35],
-  ],
-  [
-    [121, 7, 108, 20, 59],
-    [29, 28, 122, 125, 11],
-    [51, 15, 41, 124, 84],
-    [78, 54, 99, 24, 60],
-    [36, 110, 46, 22, 101],
-  ],
-];
 
 const override = css`
   /* Definisikan gaya khusus di sini */
@@ -86,19 +49,10 @@ export default function Wikirace() {
   function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  const [awal, setAwal] = useState('');
-  const [akhir, setAkhir] = useState('');
-  const [inputsFilled, setInputsFilled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [openAwal, setOpenAwal] = useState(false);
-  const [openAkhir, setOpenAkhir] = useState(false);
-  // State untuk autocomplete
-  const [resultAwal, setResultAwal]= useState([])
-  const [resultAkhir, setResultAkhir]= useState([])
   const [activeAlgorithm, setActiveAlgorithm] = useState(''); // default kosong
-  const [activeSolution, setActiveSolution] = useState(''); // default kosong
   const [errorMessage, setErrorMessage] = useState(null)
   const [separateX, setSeparateX] = useState(1.1);
   const [separateY, setSeparateY] = useState(1.1);
@@ -115,29 +69,7 @@ export default function Wikirace() {
     setActiveAlgorithm(algorithm);
   };
 
-  const handleSolutionClick = (solution) => {
-    setActiveSolution(solution);
-  };
-
-  const handleChangeAwal = (event) => {
-    setOpenAwal(true);
-    handleQueryAwal();
-    setAwal(event.target.value);
-    setSubmitted(false);
-    setInputsFilled(event.target.value !== '' || akhir !== '');
-  };
-
-  const handleChangeAkhir = (event) => {
-    setOpenAkhir(true);
-    handleQueryAkhir();
-    setAkhir(event.target.value);
-    setSubmitted(false);
-    setInputsFilled(awal !== '' || event.target.value !== '');
-  };
-
   const handleSubmit = async (event) => {
-    setOpenAwal(false)
-    setOpenAkhir(false)
     setSubmitted(false)
     event.preventDefault();
     
@@ -171,11 +103,10 @@ export default function Wikirace() {
     }
     setLoading(true);
     try {
+      // TODO: frontend request to backend server endpoint
       const response = await axios.post('http://localhost:8080/search', {
-        start: awal,
-        target: akhir,
-        algorithm: activeAlgorithm,
-        solution: activeSolution
+        cube : matrixData,
+        algorithm: activeAlgorithm
       });
       setLoading(false);
       setSubmitted(true);
@@ -186,73 +117,6 @@ export default function Wikirace() {
       setLoading(false);
     }
   };
-  
-
-    const handleQueryAwal = async () => {
-      const value = awal.trim();
-
-      // if (!value) {
-      //     console.error("No query provided");
-      //     return;
-      // }
-
-      try {
-          const response = await axios.get(
-              `http://localhost:8080/api/wikipedia?query=${encodeURIComponent(value)}`
-          );
-
-          console.log("Response data:", response.data); // Check response structure
-          // Assuming response.data is directly an array of results as per your backend code
-          if (Array.isArray(response.data)) {
-              const results = response.data.map(item => ({
-                  title: item.title,
-                  thumbnail: item.thumbnail || "", // Handle missing thumbnail
-              }));
-
-              console.log("Formatted results:", results);
-              setResultAwal(results); // Assuming setResultAwal is your state setter
-          } else {
-              console.error('Error fetching data: Invalid response format');
-          }
-      } catch (error) {
-          console.error('Error fetching data:', error);
-      }
-  };
-
-    
-  const handleQueryAkhir = async () => {
-    const value = akhir.trim();
-
-    // if (!value) {
-    //     console.error("No query provided");
-    //     return;
-    // }
-
-    try {
-        const response = await axios.get(
-            `http://localhost:8080/api/wikipedia?query=${encodeURIComponent(value)}`
-        );
-
-        console.log("Response data:", response.data); // Check response structure
-
-
-        // Assuming response.data is directly an array of results as per your backend code
-        if (Array.isArray(response.data)) {
-            const results = response.data.map(item => ({
-                title: item.title,
-                thumbnail: item.thumbnail || "", // Handle missing thumbnail
-            }));
-
-            console.log("Formatted results:", results);
-            setResultAkhir(results); // Assuming setResultAwal is your state setter
-        } else {
-            console.error('Error fetching data: Invalid response format');
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-};
-
 
 
 // Button style base
