@@ -1,8 +1,5 @@
-import { Inter } from "next/font/google";
+// app/layout.js or app/layout.tsx (depending on your setup)
 import "./globals.css";
-import StarsCanvas from "@/components/StarBackground";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Lemanspedia - WikiRace Program",
@@ -12,11 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <StarsCanvas/>
+      <body className="bg-[#f7f8fa]">
         {children}
-        </body>
-      
+      </body>
     </html>
   );
 }

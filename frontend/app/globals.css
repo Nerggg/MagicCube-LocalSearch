@@ -32,6 +32,36 @@ body {
   }
 }
 
-.wiki-link:hover {
-  color: #ff6347;
+/* Efek mengetik dengan animasi hapus */
+.typing-animation {
+  display: inline-block;
+  padding-bottom: 8px;
+  overflow: hidden;             /* Sembunyikan teks yang belum ditampilkan */
+  white-space: nowrap;          /* Hindari teks terpotong ke baris berikutnya */
+  border-right: 3px solid;      /* Efek cursor */
+  animation: typing 6s steps(20, end), blink 0.7s step-end infinite;
+  animation: typing-erase 10s steps(20, end) infinite; /* Animasi berulang */
+}
+
+/* Keyframes untuk animasi mengetik dan menghapus */
+@keyframes typing-erase {
+  0%, 40% {
+    width: 0;                   /* Mulai dari tidak ada teks */
+  }
+  50%, 90% {
+    width: 100%;                /* Selesai mengetik, tunggu sebentar */
+  }
+  100% {
+    width: 0;                   /* Hapus teks setelah selesai */
+  }
+}
+
+/* Keyframes untuk animasi blink cursor */
+@keyframes blink {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: black;
+  }
 }

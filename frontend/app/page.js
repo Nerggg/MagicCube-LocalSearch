@@ -51,93 +51,64 @@ export default function Home() {
 
 
   return (
-        <div className="flex flex-col w-full items-center justify-center">
-        <Navbar/>
-        <div style={{ height: '80vh', width:'80vw' }}>
+    <div className="bg-gray-100 text-gray-800 font-sans pb-12 min-h-screen">
+      <Navbar />
+
+      {/* Canvas Section */}
+      <div className="h-[70vh] w-[80vw] mx-auto mb-12">
         <Canvas>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
-          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} />
-          <OrbitControls enableZoom={true} />
+          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} rotationSpeed={0.01} />
+          <OrbitControls enableRotate={false} enablePan={false} enableZoom={false} />
         </Canvas>
       </div>
 
-      {/* Kontrol slider untuk pemisahan di X, Y, Z */}
-      <div style={{ padding: '20px' }}>
-        <div>
-          <label>Separate by X:</label>
-          <input
-            type="range"
-            min="1.0"
-            max="2.5"
-            step="0.1"
-            value={separateX}
-            onChange={(e) => setSeparateX(parseFloat(e.target.value))}
-          />
-        </div>
-        <div>
-          <label>Separate by Y:</label>
-          <input
-            type="range"
-            min="1.0"
-            max="2.5"
-            step="0.1"
-            value={separateY}
-            onChange={(e) => setSeparateY(parseFloat(e.target.value))}
-          />
-        </div>
-        <div>
-          <label>Separate by Z:</label>
-          <input
-            type="range"
-            min="1.0"
-            max="2.5"
-            step="0.1"
-            value={separateZ}
-            onChange={(e) => setSeparateZ(parseFloat(e.target.value))}
-          />
+      <div className="flex justify-center pb-[60px] ">
+      <div align="center h-[50px]">
+        <h1 className="text-5xl font-bold typing-animation"><u>Magic Cube</u> Solver</h1>
+      </div>
+
+      </div>
+
+      {/* WikiRace Information Card */}
+      <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[70%] mx-auto mb-12">
+        <h3 className="text-3xl font-bold text-center mb-4">
+          What is <span className="underline">Magic Cube</span>?
+        </h3>
+        <div className="flex flex-col md:flex-row items-center justify-center">
+          <img src={'/Simple_Magic_Cube.svg'} alt="Wikipedia logo" className="w-40 rounded-lg mb-6 md:mb-0 md:mr-8" />
+          <p className="text-gray-700 text-justify leading-relaxed">
+          A <b>Magic Cube</b> is a 3D extension of the magic square in mathematics. It is a cube grid (like 3x3x3 or larger) filled with numbers so that the sum of each row, column, and layer is equal, achieving a "magic constant." Variants include perfect magic cubes, where all diagonals also sum to this constant. Magic cubes are studied in number theory and combinatorics due to their symmetrical and numerical patterns.
+          </p>
         </div>
       </div>
-        {/*Start point What is WikiRace Card*/}
-        <div className='rounded-[10px] my-2 w-[70%] h-fit relative border-2 border-white mx-4 mt-[50px]'>
-            <div className='p-4 flex flex-col text-white'>
-                <div className='flex items-start justify-center'>
-                <h3 className='font-bold text-3xl text-white mx-[30px]'>What is <span className="underline">WikiRace</span>?</h3>
-                </div>
-                <div className='flex flex-row justify-center'>
-                  <div className=''>
-                    <img src={'\wikipedia-logo.png'} className='w-[400px] mt-[20px]'/>
-                  </div>
-                  <div className=' text-left w-[500px] ml-[25px]'>
-                  <p className='font-inter text-l text-white mt-[6px] text-justify'> Wikiracing is a multiplayer virtual game themed around Wikipedia. The game measures the speed at which someone traverses links from one page to another. This game gained prominence among developers as it was once competed in TechOlympics and Yale Freshman Olympics.</p>
-                  <p className='font-inter text-l text-white mt-[6px] text-justify'>The WikiRace processing on this website is done using the Go programming language. The website is capable of processing the entire route from the starting address to the destination Wikipedia address using the Iterative Deepening Search (IDS) and Breadth First Search (BFS) algorithms to complete the WikiRace game. The website can accept input in the form of algorithm type, initial article title, and destination article title. The output provided by the website includes the number of articles examined, the number of articles traversed, the route of article exploration (from the initial article to the destination article), and the search time (in ms).</p>
-                  </div>
-                </div>
-              </div>
-          </div>
-          {/*end point What is WikiRace Card*/}
-          {/* starpoint BFS IDS Algorithm */}
-          <div className='justify-around w-full h-fit flex flex-row mb-[50px]'>
-          
-            {/* Algoritma BFS */}
-          <div className='rounded-[10px] my-2 w-[32%] h-full relative border-2 border-white mx-4 mt-[50px] ml-[15%]'>
-            <h2 className='font-bold text-2xl text-white'>Breadth First Search (BFS)</h2>
-            <p className='font-inter text-l text-white mt-[6px] text-justify mx-[10px]'>Breadth-First Search (BFS) is a fundamental algorithm used in graph theory and computer science. It operates by exploring all the vertices (nodes) of a graph systematically, starting from a designated source vertex. The algorithm maintains a queue data structure to keep track of the vertices that need to be explored. At the beginning of the traversal, the source vertex is enqueued into the queue. Then, BFS iteratively dequeues vertices from the front of the queue and explores their adjacent vertices. This process continues until all vertices in the graph have been visited or until the desired condition is met. One of the key features of BFS is that it guarantees the shortest path from the source vertex to any other vertex in an unweighted graph. This property makes it particularly useful for tasks such as finding the shortest path between two nodes, determining connectivity, or exploring all reachable nodes in a graph. BFS is also commonly used in various applications such as network routing protocols, web crawlers, social network analysis, and shortest path algorithms in GPS navigation systems. Its simplicity and efficiency make it a versatile algorithm for solving a wide range of graph-related problems.</p>
-          <div className='flex justify-center'>
-          <img src='/BFS.gif' className='h-[250px] my-[70px]'/>
-          </div>
-          </div>
-          {/* Algoritma IDS */}
-          <div className='rounded-[10px] my-2 w-[32%] h-full relative border-2 border-white mx-4 mt-[50px] mr-[15%]'>
-            <h2 className='font-bold text-2xl text-white'>Iterative Deepening Search (IDS)</h2>
-            <p className='font-inter text-l text-white mt-[6px] text-justify mx-[10px]'>
-Iterative Deepening Search (IDS) is a systematic search algorithm utilized for traversing trees or graphs. Operating with a strategy that amalgamates the benefits of Depth-First Search (DFS) and the completeness of Breadth-First Search (BFS), IDS iteratively conducts DFS with escalating depth limits until the target goal is attained. The algorithm initiates with an initial depth limit of 0 and proceeds to explore the search space. Initially, it performs DFS starting from the root node, restricting the depth of exploration to the current depth limit. Should the goal node be encountered within this limit, the solution is promptly returned. In cases where the goal node remains undiscovered but unexplored nodes exist at the current depth limit, the exploration continues. However, if DFS exhausts the exploration at the current depth limit without locating the goal node, the depth limit is incremented by 1, and the process is reiterated. This iterative approach persists until the goal node is successfully found or until all nodes within the search space have been explored. The utilization of iterative deepening in IDS allows for a balance between memory efficiency and search completeness, rendering it particularly suitable for scenarios where the depth of the solution is unknown or where memory constraints are pertinent.</p>
-          <div className='flex justify-center'>
-          <img src='/IDS.gif' className='h-[350px]'/>
+
+      {/* BFS and IDS Algorithm Explanation Cards */}
+      <div className="flex flex-col md:flex-row justify-around w-full gap-6">
         
-          </div>
-          </div>
+        {/* BFS Card */}
+        <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[90%] md:w-[45%] mx-auto">
+          <h2 className="text-2xl font-bold mb-4">Breadth First Search (BFS)</h2>
+          <p className="text-gray-700 text-justify leading-relaxed mb-6">
+            Breadth-First Search (BFS) is a fundamental algorithm used in graph theory and computer science. It operates by exploring all the vertices (nodes) of a graph systematically, starting from a designated source vertex. BFS guarantees the shortest path in an unweighted graph.
+          </p>
+          <div className="flex justify-center">
+            <img src="/BFS.gif" alt="BFS Algorithm" className="h-60 rounded-lg" />
           </div>
         </div>
+
+        {/* IDS Card */}
+        <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[90%] md:w-[45%] mx-auto">
+          <h2 className="text-2xl font-bold mb-4">Iterative Deepening Search (IDS)</h2>
+          <p className="text-gray-700 text-justify leading-relaxed mb-6">
+            Iterative Deepening Search (IDS) is a systematic search algorithm that combines Depth-First Search (DFS) and Breadth-First Search (BFS) principles. IDS gradually increases the depth limit until the target goal is found, making it suitable for scenarios with unknown solution depths or memory constraints.
+          </p>
+          <div className="flex justify-center">
+            <img src="/IDS.gif" alt="IDS Algorithm" className="h-80 rounded-lg" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

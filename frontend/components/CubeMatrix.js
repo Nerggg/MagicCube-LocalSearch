@@ -1,8 +1,9 @@
 // components/CubeMatrix.js
 import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const CubeMatrix = ({ data, separateX, separateY, separateZ }) => {
+const CubeMatrix = ({ data, separateX, separateY, separateZ, rotationSpeed }) => {
   const groupRef = useRef();
 
   // Fungsi untuk membuat tekstur dari angka
@@ -38,6 +39,14 @@ const CubeMatrix = ({ data, separateX, separateY, separateZ }) => {
   const offsetX = (data[0][0].length - 1) * cubeSize * separateX * 0.5;
   const offsetY = (data[0].length - 1) * cubeSize * separateY * 0.5;
   const offsetZ = (data.length - 1) * cubeSize * separateZ * 0.5;
+
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.x += rotationSpeed;
+      groupRef.current.rotation.y += rotationSpeed;
+    }
+  });
+
 
   return (
     <group ref={groupRef}>
