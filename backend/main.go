@@ -41,7 +41,9 @@ func main() {
 
 	var arr [][][]int = generateRandom5x5x5Array()
 	printCube(arr)
-	simulatedAnnealing(&arr, 10000, 0.999, 1000000)
+	// simulatedAnnealing(&arr, 10000, 0.999, 1000000)
+	// http.HandleFunc("/calculate")
+
 	// stochasticHillClimbing(&arr, 500000)
 	// steepestAscentHillClimbing(&arr)
 	// sidewaysMoveHillClimbing(&arr)
