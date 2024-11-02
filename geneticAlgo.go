@@ -6,9 +6,9 @@ import (
 )
 
 const (
-    populationSize = 50
+    populationSize = 100
     mutationRate   = 0.01
-    maxGenerations = 100
+    maxGenerations = 1000
     targetFitness  = 109
 )
 
@@ -18,15 +18,15 @@ func initializePopulation(size int) [][][][]int {
     for i := 0; i < size; i++ {
         population[i] = generateRandom5x5x5Array()
     }
-    return population // Nyari populasi / kumpulan konfigurasi kubus buat dijadiin parent
+    return population // Nyari populasi / kumpulan awal konfigurasi kubus
 }
 
 func selectParent(population [][][][]int) [][][]int {
-    tournamentSize := 5 // Cari 5 kandidat dari populasi yang udah dihasilin
+    tournamentSize := 20 // Cari 20 kandidat dari populasi yang udah dihasilin
     best := population[rand.Intn(len(population))] // Inisialisasi best pertama dengan random
     bestFitness := calculateObjectiveFunction(best)
 
-    for i := 1; i < tournamentSize; i++ { // looping buat cari kandidat terbaik dari 5 kandidat
+    for i := 1; i < tournamentSize; i++ { // looping buat cari kandidat terbaik dari 20 kandidat
         individual := population[rand.Intn(len(population))]
         individualFitness := calculateObjectiveFunction(individual)
         if individualFitness > bestFitness {
@@ -43,14 +43,14 @@ func crossover(parent1, parent2 [][][]int) ([][][]int, [][][]int) {
     child1 := copy3DArray(parent1)
     child2 := copy3DArray(parent2)
 
-    // Cross oveer point 
+    // Cross over point 
     x := 3
 
-    // Perform crossover
+    // lakuin crossover
     for i := 0; i < len(parent1); i++ {
         for j := 0; j < len(parent1[i]); j++ {
             for k := 0; k < len(parent1[i][j]); k++ {
-                if (i <= x) {
+                if (i <= x) { // kalo dia blom lewatin cross over point, gaada perubahan
                     child1[i][j][k] = parent1[i][j][k]
                     child2[i][j][k] = parent2[i][j][k]
                 } else {
@@ -60,24 +60,65 @@ func crossover(parent1, parent2 [][][]int) ([][][]int, [][][]int) {
             }
         }
     }
-    return child1, child2
+    return child1, child2 // dapetin 2 child
 }
 
 func mutate(individual [][][]int) [][][]int {
+    usedNumbers := make(map[int]bool)
+    duplicates := make([][3]int, 0) // buat nyimpen posisi duplicate
+
+    //sekali pass: cari duplicate
     for i := 0; i < len(individual); i++ {
         for j := 0; j < len(individual[i]); j++ {
             for k := 0; k < len(individual[i][j]); k++ {
-                if rand.Float64() < mutationRate { // mutation rate ini 0.01, jadi 1% kemungkinan buat mutasi
-                    x := rand.Intn(126)
-                    individual[i][j][k] = x
+                num := individual[i][j][k]
+                if usedNumbers[num] {
+                    duplicates = append(duplicates, [3]int{i, j, k})
+                } else {
+                    usedNumbers[num] = true
                 }
             }
         }
     }
+
+    // pass kedua : ganti duplicate dengan angka random
+    for _, pos := range duplicates {
+        newNum := rand.Intn(125) + 1
+        for usedNumbers[newNum] {
+            newNum = rand.Intn(125) + 1
+        }
+        individual[pos[0]][pos[1]][pos[2]] = newNum
+        usedNumbers[newNum] = true
+    }
+
+    // kemungkinan 7% untuk swap 2 baris
+    if rand.Float64() < 0.07 {
+        // Select two random positions
+        i1, j1, k1 := rand.Intn(len(individual)), rand.Intn(len(individual[0])), rand.Intn(len(individual[0][0]))
+        i2, j2, k2 := rand.Intn(len(individual)), rand.Intn(len(individual[0])), rand.Intn(len(individual[0][0]))
+
+        // swap baris
+        individual[i1][j1][k1], individual[i2][j2][k2] = individual[i2][j2][k2], individual[i1][j1][k1]
+    }
+
+    // 3% kemungkinan untuk swap 2 kolom
+    if rand.Float64() < 0.03 {
+        // Select two random columns
+        col1 := rand.Intn(len(individual[0]))
+        col2 := rand.Intn(len(individual[0]))
+
+        //swap kolom
+        for i := 0; i < len(individual); i++ {
+            for j := 0; j < len(individual[i]); j++ {
+                individual[i][j][col1], individual[i][j][col2] = individual[i][j][col2], individual[i][j][col1]
+            }
+        }
+    }
+
     return individual
 }
 
-func evolvePopulation(population [][][][]int) [][][][]int {
+func evolvePopulation(population [][][][]int) [][][][]int { // Ini fungsi buat manggil dan dapetin populasi baru
     newPopulation := make([][][][]int, 0, len(population))
 
     for len(newPopulation) < len(population) {
@@ -98,12 +139,12 @@ func geneticAlgorithm() {
     generation := 0
 
     for generation < maxGenerations {
-        population = evolvePopulation(population)
-        bestFitness := calculateObjectiveFunction(population[0])
+        population = evolvePopulation(population) // Ini populasinya berubah terus setiap iterasi jadi makin bagus
+        bestFitness := calculateObjectiveFunction(population[0]) // asumsi : population[0] itu terbaik
         fmt.Printf("Generation: %d, Best Fitness: %d\n", generation, bestFitness)
 
         if bestFitness == targetFitness {
-            printCube(population[0])
+            printCube(population[0]) //asumsi : population[0] itu terbaik
             fmt.Println("success")
             return
         }
