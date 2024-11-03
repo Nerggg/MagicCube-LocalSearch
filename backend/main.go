@@ -44,7 +44,7 @@ func main() {
 	// simulatedAnnealing(&arr, 10000, 0.999, 1000000)
 	// http.HandleFunc("/calculate")
 
-	// stochasticHillClimbing(&arr, 500000)
+	// stochasticHillClimbing(&arr, 2500000)
 	// steepestAscentHillClimbing(&arr)
 	// sidewaysMoveHillClimbing(&arr)
 }

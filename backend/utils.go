@@ -271,10 +271,10 @@ func generateSuccessor(originalArr [][][]int) [][][][]int {
 
 	for i1 := 0; i1 < len(originalArr); i1++ {
 		for j1 := 0; j1 < len(originalArr[i1]); j1++ {
-			for k1 := 0; k1 < len(originalArr[j1]); k1++ {
+			for k1 := 0; k1 < len(originalArr[i1][j1]); k1++ {
 				for i2 := 0; i2 < len(originalArr); i2++ {
 					for j2 := 0; j2 < len(originalArr[i2]); j2++ {
-						for k2 := 0; k2 < len(originalArr[j2]); k2++ {
+						for k2 := 0; k2 < len(originalArr[i2][j2]); k2++ {
 							if (i1 == i2 && j1 == j2 && k1 == k2) || inStore(store, i1, j1, k1, i2, j2, k2) {
 								continue
 							}
@@ -328,10 +328,10 @@ func generateMaximumSuccessor(originalArr [][][]int) [][][]int {
 
 	for i1 := 0; i1 < len(originalArr); i1++ {
 		for j1 := 0; j1 < len(originalArr[i1]); j1++ {
-			for k1 := 0; k1 < len(originalArr[j1]); k1++ {
+			for k1 := 0; k1 < len(originalArr[i1][j1]); k1++ {
 				for i2 := 0; i2 < len(originalArr); i2++ {
 					for j2 := 0; j2 < len(originalArr[i2]); j2++ {
-						for k2 := 0; k2 < len(originalArr[j2]); k2++ {
+						for k2 := 0; k2 < len(originalArr[i2][j2]); k2++ {
 							if (i1 == i2 && j1 == j2 && k1 == k2) || inStore(store, i1, j1, k1, i2, j2, k2) {
 								continue
 							}
