@@ -53,7 +53,7 @@ func main() {
 	// simulatedAnnealing(&arr, 10000, 0.999, 1000000)
 	// http.HandleFunc("/calculate")
 
-	// stochasticHillClimbing(&arr, 2500000)
+	// stochasticHillClimbing(&arr, 500000)
 	// steepestAscentHillClimbing(&arr)
 	// sidewaysMoveHillClimbing(&arr)
 	fmt.Println("Server is running on port 8080")
