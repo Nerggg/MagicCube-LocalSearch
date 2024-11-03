@@ -288,7 +288,7 @@ return (
             </div>
             </div>
           </div>
-          <p className="text-gray-800 text-center mt-4 text-xl">Found <strong>{activeAlgorithm}</strong> solution in <strong>{(results.duration / 1000).toFixed(2)} seconds</strong>!</p>
+          <p className="text-gray-800 text-center my-4 text-xl">Found <strong>{activeAlgorithm}</strong> solution in <strong>{(results.duration / 1000).toFixed(2)} seconds</strong>!</p>
           <ObjectiveChart iterOF={results.iterOF} />
         </div>
       )}
