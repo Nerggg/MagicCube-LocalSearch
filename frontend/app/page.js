@@ -86,29 +86,41 @@ export default function Home() {
 
       {/* BFS and IDS Algorithm Explanation Cards */}
       <div className="flex flex-col md:flex-row justify-around w-full gap-6">
-        
-        {/* BFS Card */}
-        <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[90%] md:w-[45%] mx-auto">
-          <h2 className="text-2xl font-bold mb-4">Breadth First Search (BFS)</h2>
-          <p className="text-gray-700 text-justify leading-relaxed mb-6">
-            Breadth-First Search (BFS) is a fundamental algorithm used in graph theory and computer science. It operates by exploring all the vertices (nodes) of a graph systematically, starting from a designated source vertex. BFS guarantees the shortest path in an unweighted graph.
-          </p>
-          <div className="flex justify-center">
-            <img src="/BFS.gif" alt="BFS Algorithm" className="h-60 rounded-lg" />
-          </div>
-        </div>
 
-        {/* IDS Card */}
-        <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[90%] md:w-[45%] mx-auto">
-          <h2 className="text-2xl font-bold mb-4">Iterative Deepening Search (IDS)</h2>
-          <p className="text-gray-700 text-justify leading-relaxed mb-6">
-            Iterative Deepening Search (IDS) is a systematic search algorithm that combines Depth-First Search (DFS) and Breadth-First Search (BFS) principles. IDS gradually increases the depth limit until the target goal is found, making it suitable for scenarios with unknown solution depths or memory constraints.
-          </p>
-          <div className="flex justify-center">
-            <img src="/IDS.gif" alt="IDS Algorithm" className="h-80 rounded-lg" />
-          </div>
-        </div>
-      </div>
+{/* Hill Climbing Card */}
+<div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
+  <h2 className="text-2xl font-bold mb-4">Hill Climbing</h2>
+  <p className="text-gray-700 text-justify leading-relaxed mb-6">
+    Breadth-First Search (BFS) is a fundamental algorithm used in graph theory and computer science. It operates by exploring all the vertices (nodes) of a graph systematically, starting from a designated source vertex. BFS guarantees the shortest path in an unweighted graph.
+  </p>
+  <div className="flex justify-center">
+    <img src="/BFS.gif" alt="BFS Algorithm" className="h-60 rounded-lg" />
+  </div>
+</div>
+
+{/* Simulated Annealing Card */}
+<div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
+  <h2 className="text-2xl font-bold mb-4">Simulated Annealing</h2>
+  <p className="text-gray-700 text-justify leading-relaxed mb-6">
+    Iterative Deepening Search (IDS) is a systematic search algorithm that combines Depth-First Search (DFS) and Breadth-First Search (BFS) principles. IDS gradually increases the depth limit until the target goal is found, making it suitable for scenarios with unknown solution depths or memory constraints.
+  </p>
+  <div className="flex justify-center">
+    <img src="/IDS.gif" alt="IDS Algorithm" className="h-80 rounded-lg" />
+  </div>
+</div>
+
+{/* Genetic Algorithm Card */}
+<div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
+  <h2 className="text-2xl font-bold mb-4">Genetic Algorithm</h2>
+  <p className="text-gray-700 text-justify leading-relaxed mb-6">
+    Iterative Deepening Search (IDS) is a systematic search algorithm that combines Depth-First Search (DFS) and Breadth-First Search (BFS) principles. IDS gradually increases the depth limit until the target goal is found, making it suitable for scenarios with unknown solution depths or memory constraints.
+  </p>
+  <div className="flex justify-center">
+    <img src="/IDS.gif" alt="IDS Algorithm" className="h-80 rounded-lg" />
+  </div>
+</div>
+</div>
+
     </div>
   );
 }

@@ -73,30 +73,9 @@ export default function Wikirace() {
     setSubmitted(false)
     event.preventDefault();
     
-    if (awal =='' || akhir == ''){
-      setErrorMessage("Please complete the start and the target.");
-      setLoading(false)
-      await delay(1500);
-      setErrorMessage(null);
-      return;
-    }
-    else if (activeAlgorithm == '' && activeSolution == ''){
-      setErrorMessage("Please choose the algorithm and solution.");
-      setLoading(false)
-      await delay(1500);
-      setErrorMessage(null);
-      return;
-    }
-    else if (activeAlgorithm == ''){
+    if (activeAlgorithm == ''){
       setErrorMessage("Please choose the algorithm.");
       setLoading(false)
-      await delay(1500);
-      setErrorMessage(null);
-      return;
-    }
-    else if (activeSolution == ''){
-      setErrorMessage("Please choose the solution.");
-      setLoading(false);
       await delay(1500);
       setErrorMessage(null);
       return;
@@ -154,6 +133,11 @@ return (
           step="0.1"
           value={separateX}
           onChange={(e) => setSeparateX(parseFloat(e.target.value))}
+          className="w-full h-2 bg-gray-200 rounded-full"
+          style={{
+            accentColor: "#1F2937", // Tailwind color gray-800 for thumb
+            color: "#1F2937",
+          }}
         />
       </div>
       <div>
@@ -165,6 +149,11 @@ return (
           step="0.1"
           value={separateY}
           onChange={(e) => setSeparateY(parseFloat(e.target.value))}
+          className="w-full h-2 bg-gray-200 rounded-full"
+          style={{
+            accentColor: "#1F2937", // Tailwind color gray-800 for thumb
+            color: "#1F2937",
+          }}
         />
       </div>
       <div>
@@ -176,6 +165,11 @@ return (
           step="0.1"
           value={separateZ}
           onChange={(e) => setSeparateZ(parseFloat(e.target.value))}
+          className="w-full h-2 bg-gray-200 rounded-full"
+          style={{
+            accentColor: "#1F2937", // Tailwind color gray-800 for thumb
+            color: "#1F2937",
+          }}
         />
       </div>
     </div>
@@ -237,7 +231,7 @@ return (
       {loading && (
         <div className="flex justify-center items-center mt-[25px] mb-[50px]">
           <BeatLoader color="#000000" loading={loading} css={override} size={15} />
-          <p className="ml-2 text-gray-800">Loading...</p> // Updated color
+          <p className="ml-2 text-gray-800">Loading...</p>
         </div>
       )}
       {submitted && results && (
