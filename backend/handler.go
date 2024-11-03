@@ -48,6 +48,10 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			// finalState, finalValue, stuckCount = steepestAscentHillClimbing(&requestData.Cube)
 		case "Sideways Move Hill Climbing":
 			// finalState, finalValue, stuckCount = sidewaysMoveHillClimbing(&requestData.Cube)
+		
+		case "Genetic Algorithm":
+			finalState, finalValue, stuckCount, iterOF = geneticAlgorithm(&requestData.Cube)
+
 		default:
 			http.Error(w, "Invalid algorithm", http.StatusBadRequest)
 			return
