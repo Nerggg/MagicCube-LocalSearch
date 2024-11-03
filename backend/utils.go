@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -85,9 +86,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			for y := 0; y < 5; y++ {
 				temp += cube[x][y][z]
 			}
-			if temp == 315 {
-				result++
-			}
+			result -= int(math.Abs(float64(315 - temp)))
 		}
 	}
 
@@ -97,9 +96,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			for x := 0; x < 5; x++ {
 				temp += cube[x][y][z]
 			}
-			if temp == 315 {
-				result++
-			}
+			result -= int(math.Abs(float64(315 - temp)))
 		}
 	}
 
@@ -109,9 +106,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			for z := 0; z < 5; z++ {
 				temp += cube[x][y][z]
 			}
-			if temp == 315 {
-				result++
-			}
+			result -= int(math.Abs(float64(315 - temp)))
 		}
 	}
 
@@ -127,9 +122,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			x++
 			z++
 		}
-		if temp == 315 {
-			result++
-		}
+		result -= int(math.Abs(float64(315 - temp)))
 	}
 	x = 4
 	z = 0
@@ -142,9 +135,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			x--
 			z++
 		}
-		if temp == 315 {
-			result++
-		}
+		result -= int(math.Abs(float64(315 - temp)))
 	}
 
 	y := 0
@@ -158,9 +149,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			y++
 			z++
 		}
-		if temp == 315 {
-			result++
-		}
+		result -= int(math.Abs(float64(315 - temp)))
 	}
 	y = 4
 	z = 0
@@ -173,9 +162,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			y--
 			z++
 		}
-		if temp == 315 {
-			result++
-		}
+		result -= int(math.Abs(float64(315 - temp)))
 	}
 
 	x = 0
@@ -189,9 +176,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			x++
 			y++
 		}
-		if temp == 315 {
-			result++
-		}
+		result -= int(math.Abs(float64(315 - temp)))
 	}
 	x = 4
 	y = 0
@@ -204,9 +189,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 			x--
 			y++
 		}
-		if temp == 315 {
-			result++
-		}
+		result -= int(math.Abs(float64(315 - temp)))
 	}
 
 	// iterasi bagian ketiga
@@ -220,9 +203,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 		y++
 		z++
 	}
-	if temp == 315 {
-		result++
-	}
+	result -= int(math.Abs(float64(315 - temp)))
 	x = 4
 	y = 0
 	z = 0
@@ -233,9 +214,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 		y++
 		z++
 	}
-	if temp == 315 {
-		result++
-	}
+	result -= int(math.Abs(float64(315 - temp)))
 	x = 4
 	y = 0
 	z = 4
@@ -246,9 +225,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 		y++
 		z--
 	}
-	if temp == 315 {
-		result++
-	}
+	result -= int(math.Abs(float64(315 - temp)))
 	x = 0
 	y = 0
 	z = 4
@@ -259,9 +236,7 @@ func calculateObjectiveFunction(cube [][][]int) int { // ngitung objective funct
 		y++
 		z--
 	}
-	if temp == 315 {
-		result++
-	}
+	result -= int(math.Abs(float64(315 - temp)))
 	return result
 }
 

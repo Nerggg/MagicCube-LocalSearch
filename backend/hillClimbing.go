@@ -2,80 +2,104 @@ package main
 
 import "fmt"
 
-func steepestAscentHillClimbing(cube *[][][]int) {
-	currentObjectiveFunction := calculateObjectiveFunction(*cube)
-	for currentObjectiveFunction < 109 {
-		tempCube := generateMaximumSuccessor(*cube)
-		tempObjectiveFunction := calculateObjectiveFunction(tempCube)
-		if tempObjectiveFunction <= currentObjectiveFunction {
+func steepestAscentHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
+	iterOF := []int{}
+	currentState := *cube
+	currentValue := calculateObjectiveFunction(currentState)
+	for currentValue < 0 {
+		newState := copy3DArray(*cube)
+		newState = generateMaximumSuccessor(newState)
+		newValue := calculateObjectiveFunction(newState)
+		if newValue <= currentValue {
 			printCube(*cube)
 			fmt.Println("fail")
 			break
 		}
-		*cube = tempCube
-		currentObjectiveFunction = tempObjectiveFunction
-		fmt.Println(currentObjectiveFunction)
+		*cube = newState
+		currentValue = newValue
+		fmt.Println(currentValue)
+		iterOF = append(iterOF, currentValue)
 	}
-	if currentObjectiveFunction == 109 {
+	if currentValue == 0 {
 		printCube(*cube)
 		fmt.Println("success")
 	}
+
+	return *cube, currentValue, 0, iterOF
 }
 
-func sidewaysMoveHillClimbing(cube *[][][]int) {
-	currentObjectiveFunction := calculateObjectiveFunction(*cube)
-	for currentObjectiveFunction < 109 {
-		tempCube := generateMaximumSuccessor(*cube)
-		tempObjectiveFunction := calculateObjectiveFunction(tempCube)
-		if tempObjectiveFunction < currentObjectiveFunction {
+func sidewaysMoveHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
+	iterOF := []int{}
+	currentState := *cube
+	currentValue := calculateObjectiveFunction(currentState)
+	for currentValue < 0 {
+		sameCounter := 0
+		newState := copy3DArray(*cube)
+		newState = generateMaximumSuccessor(newState)
+		newValue := calculateObjectiveFunction(newState)
+		if newValue == currentValue {
+			sameCounter++
+		}
+		if newValue > currentValue {
+			sameCounter = 0
+		}
+		if newValue < currentValue || sameCounter == 1 {
 			printCube(*cube)
 			fmt.Println("fail")
 			break
 		}
-		*cube = tempCube
-		currentObjectiveFunction = tempObjectiveFunction
-		fmt.Println(currentObjectiveFunction)
+
+		// fmt.Println("newvalue ", newValue)
+		// fmt.Println("currentvalue ", currentValue)
+		// fmt.Println("same counternya ", sameCounter)
+
+		*cube = newState
+		currentValue = newValue
+		fmt.Println(currentValue)
+		iterOF = append(iterOF, currentValue)
 	}
-	if currentObjectiveFunction == 109 {
+	if currentValue == 0 {
 		printCube(*cube)
 		fmt.Println("success")
 	}
+
+	return *cube, currentValue, 0, iterOF
 }
 
-func stochasticHillClimbing(cube *[][][]int, NMax int) {
-	currentObjectiveFunction := calculateObjectiveFunction(*cube)
+func stochasticHillClimbing(cube *[][][]int, NMax int) ([][][]int, int, int, []int) {
+	iterOF := []int{}
+	currentState := *cube
+	currentValue := calculateObjectiveFunction(currentState)
 	proceed := true
-	for currentObjectiveFunction < 109 {
-		stochasticHillClimbingHelper(cube, NMax, currentObjectiveFunction, &proceed)
-		if !proceed {
+	for currentValue < 0 && proceed {
+		var i int
+		for i = 0; i < NMax; i++ {
+			if i%100000 == 0 && i != 0 {
+				fmt.Println("Iterasi ke ", i)
+			}
+			newState := copy3DArray(currentState)
+			newState = swapRandom(currentState)
+			newValue := calculateObjectiveFunction(newState)
+			if newValue-currentValue > 0 {
+				currentState = copy3DArray(newState)
+				currentValue = newValue
+				break
+			}
+		}
+		fmt.Println(currentValue)
+		iterOF = append(iterOF, currentValue)
+
+		if i == NMax {
+			proceed = false
 			printCube(*cube)
 			fmt.Println("fail")
-			break
 		}
-		currentObjectiveFunction = calculateObjectiveFunction(*cube)
-		fmt.Println(currentObjectiveFunction)
 	}
 
-	if currentObjectiveFunction == 109 {
+	if currentValue == 0 {
 		printCube(*cube)
 		fmt.Println("success")
 	}
-}
 
-func stochasticHillClimbingHelper(cube *[][][]int, NMax int, currentObjectiveFunction int, proceed *bool) {
-	i := 0
-	for i < NMax {
-		if i%100000 == 0 && i != 0 {
-			fmt.Println("Iterasi ke ", i)
-		}
-		tempCube := swapRandom(*cube)
-		if calculateObjectiveFunction(tempCube) > currentObjectiveFunction {
-			*cube = tempCube
-			break
-		}
-		i++
-	}
-	if i == NMax {
-		*proceed = false
-	}
+	return currentState, currentValue, 0, iterOF
 }

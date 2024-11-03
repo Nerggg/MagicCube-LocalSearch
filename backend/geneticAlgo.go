@@ -8,7 +8,7 @@ import (
 const (
 	populationSize = 100
 	maxGenerations = 1000
-	targetFitness  = 109
+	targetFitness  = 0
 )
 
 func initializePopulation(cube *[][][]int, size int) [][][][]int {
@@ -133,35 +133,35 @@ func evolvePopulation(population [][][][]int) [][][][]int { // Ini fungsi buat m
 }
 
 func geneticAlgorithm(cube *[][][]int) ([][][]int, int, int, []int) {
-    population := initializePopulation(cube, populationSize)
-    generation := 0
-    stuckCount := 0
-    iterOF := []int{}
-    var bestState [][][]int
-    var bestFitness int
+	population := initializePopulation(cube, populationSize)
+	generation := 0
+	stuckCount := 0
+	iterOF := []int{}
+	var bestState [][][]int
+	var bestFitness int
 
-    for generation < maxGenerations {
-        population = evolvePopulation(population) // Ini populasinya berubah terus setiap iterasi jadi makin bagus
+	for generation < maxGenerations {
+		population = evolvePopulation(population) // Ini populasinya berubah terus setiap iterasi jadi makin bagus
 
-        // Find the best individual in the current population
-        for _, individual := range population {
-            fitness := calculateObjectiveFunction(individual)
-            if fitness > bestFitness {
-                bestFitness = fitness
-                bestState = individual
-            }
-        }
+		// Find the best individual in the current population
+		for _, individual := range population {
+			fitness := calculateObjectiveFunction(individual)
+			if fitness > bestFitness {
+				bestFitness = fitness
+				bestState = individual
+			}
+		}
 
-        if bestFitness == targetFitness {
-            printCube(bestState)
-            fmt.Println("success")
-            return bestState, bestFitness, stuckCount, iterOF
-        }
-        generation++
-        iterOF = append(iterOF, bestFitness)
-    }
+		if bestFitness == targetFitness {
+			printCube(bestState)
+			fmt.Println("success")
+			return bestState, bestFitness, stuckCount, iterOF
+		}
+		generation++
+		iterOF = append(iterOF, bestFitness)
+	}
 
-    fmt.Printf("Best fitness: %d\n", bestFitness)
-    printCube(bestState)
-    return bestState, bestFitness, stuckCount, iterOF
+	fmt.Printf("Best fitness: %d\n", bestFitness)
+	printCube(bestState)
+	return bestState, bestFitness, stuckCount, iterOF
 }

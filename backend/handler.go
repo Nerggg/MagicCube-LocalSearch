@@ -43,12 +43,11 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 		case "Simulated Annealing":
 			finalState, finalValue, stuckCount, iterOF = simulatedAnnealing(&requestData.Cube, 10000, 0.999, 1000000)
 		case "Stochastic Hill Climbing":
-			// finalState, finalValue, stuckCount = stochasticHillClimbing(&requestData.Cube, 500000)
+			finalState, finalValue, stuckCount, iterOF = stochasticHillClimbing(&requestData.Cube, 1000000)
 		case "Steepest Ascent Hill Climbing":
-			// finalState, finalValue, stuckCount = steepestAscentHillClimbing(&requestData.Cube)
+			finalState, finalValue, stuckCount, iterOF = steepestAscentHillClimbing(&requestData.Cube)
 		case "Sideways Move Hill Climbing":
-			// finalState, finalValue, stuckCount = sidewaysMoveHillClimbing(&requestData.Cube)
-		
+			finalState, finalValue, stuckCount, iterOF = sidewaysMoveHillClimbing(&requestData.Cube)
 		case "Genetic Algorithm":
 			finalState, finalValue, stuckCount, iterOF = geneticAlgorithm(&requestData.Cube)
 

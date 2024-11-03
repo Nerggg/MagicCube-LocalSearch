@@ -15,7 +15,7 @@ func simulatedAnnealing(cube *[][][]int, initialTemp float64, coolingRate float6
 	stuckCount := 0
 	iterOF := []int{}
 
-	for i := 0; i < maxIterations && currentValue < 109; i++ {
+	for i := 0; i < maxIterations && currentValue < 0; i++ {
 		newState := copy3DArray(currentState)
 		newState = swapRandom(newState)
 		newValue := calculateObjectiveFunction(newState)
@@ -37,7 +37,7 @@ func simulatedAnnealing(cube *[][][]int, initialTemp float64, coolingRate float6
 		fmt.Printf("Iteration: %d, Current value: %d, Temperature: %.5f, Stuck Count: %d\n", i, currentValue, temperature, stuckCount)
 
 		// break if temperature nearly zero or stuck count exceeds limit
-		if temperature < 1e-1000 || currentValue == 109 {
+		if temperature < 1e-1000 || currentValue == 0 {
 			break
 		}
 		iter++
@@ -47,7 +47,7 @@ func simulatedAnnealing(cube *[][][]int, initialTemp float64, coolingRate float6
 	fmt.Printf("Final value: %d\n", currentValue)
 	fmt.Println("Final solution:")
 	printCube(currentState)
-	if currentValue == 109 {
+	if currentValue == 0 {
 		fmt.Println("success")
 	} else {
 		fmt.Println("fail")
