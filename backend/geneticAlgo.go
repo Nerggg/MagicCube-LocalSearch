@@ -138,7 +138,7 @@ func geneticAlgorithm(cube *[][][]int) ([][][]int, int, int, []int) {
 	stuckCount := 0
 	iterOF := []int{}
 	var bestState [][][]int
-	var bestFitness int
+	bestFitness := -5000000
 
 	for generation < maxGenerations {
 		population = evolvePopulation(population) // Ini populasinya berubah terus setiap iterasi jadi makin bagus
