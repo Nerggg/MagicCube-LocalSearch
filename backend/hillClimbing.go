@@ -65,6 +65,9 @@ func stochasticHillClimbing(cube *[][][]int, NMax int) {
 func stochasticHillClimbingHelper(cube *[][][]int, NMax int, currentObjectiveFunction int, proceed *bool) {
 	i := 0
 	for i < NMax {
+		if i%100000 == 0 && i != 0 {
+			fmt.Println("Iterasi ke ", i)
+		}
 		tempCube := swapRandom(*cube)
 		if calculateObjectiveFunction(tempCube) > currentObjectiveFunction {
 			*cube = tempCube
