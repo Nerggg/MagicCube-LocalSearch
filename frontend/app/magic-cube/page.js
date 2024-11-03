@@ -183,12 +183,26 @@ return (
         <div className='flex flex-col items-center'>
           <h4 className="mb-2 text-xl font-semibold text-gray-800">Algorithm Type</h4>
           <div>
+          <button
+              type="button"
+              className={dynamicStyle(activeAlgorithm === 'Stochastic Hill Climbing')}
+              onClick={() => handleAlgorithmClick('Stochastic Hill Climbing')}
+            >
+              Stochastic Hill Climbing
+            </button>
             <button
               type="button"
-              className={dynamicStyle(activeAlgorithm === 'Hill Climbing')}
-              onClick={() => handleAlgorithmClick('Hill Climbing')}
+              className={dynamicStyle(activeAlgorithm === 'Steepest Ascent Hill Climbing')}
+              onClick={() => handleAlgorithmClick('Steepest Ascent Hill Climbing')}
             >
-              Hill Climbing
+              Steepest Ascent Hill Climbing
+            </button>
+            <button
+              type="button"
+              className={dynamicStyle(activeAlgorithm === 'Sideways Move Hill Climbing')}
+              onClick={() => handleAlgorithmClick('Sideways Move Hill Climbing')}
+            >
+              Sideways Move Hill Climbing
             </button>
             <button
               type="button"
