@@ -59,6 +59,11 @@ export default function Magiccube() {
   const [separateZ, setSeparateZ] = useState(1.1);
   const [matrixData, setMatrixData] = useState(generateRandomMatrixData(5, 5, 5, 1, 125));
   const [matrixResult, setMatrixResult] = useState(null);
+  const [populationSize, setPopulationSize] = useState(0);
+  const [maxGenerations, setMaxGenerations] = useState(0);
+  const [temperature, setTemperature] = useState(0); 
+  const [coolingRate, setCoolingRate] = useState(0); 
+  const [maxIterations, setMaxIterations] = useState(0); 
 
   const handleGenerateRandom = () => {
     setMatrixData(generateRandomMatrixData(5, 5, 5, 1, 125)); // Generate new random data
@@ -88,7 +93,12 @@ export default function Magiccube() {
       // TODO: frontend request to backend server endpoint
       const response = await axios.post('http://localhost:8080/search', {
         cube : matrixData,
-        algorithm: activeAlgorithm
+        algorithm: activeAlgorithm,
+        populationSize: activeAlgorithm === 'Genetic Algorithm' ? populationSize : undefined,
+        maxGenerations: activeAlgorithm === 'Genetic Algorithm' ? maxGenerations : undefined,
+        temperature: activeAlgorithm === 'Simulated Annealing' ? temperature : undefined,
+        coolingRate: activeAlgorithm === 'Simulated Annealing' ? coolingRate : undefined,
+        maxIterations: activeAlgorithm === 'Simulated Annealing' ? maxIterations : undefined
       });
       setLoading(false);
       setSubmitted(true);
@@ -219,6 +229,50 @@ return (
               Genetic Algorithm
             </button>
           </div>
+          {activeAlgorithm === 'Genetic Algorithm' && (
+            <div className="mt-4">
+              <label className="block mb-2 text-gray-800">Population Size:</label>
+              <input
+                type="number"
+                value={populationSize}
+                onChange={(e) => setPopulationSize(parseInt(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+              <label className="block mt-4 mb-2 text-gray-800">Max Generations:</label>
+              <input
+                type="number"
+                value={maxGenerations}
+                onChange={(e) => setMaxGenerations(parseInt(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+            </div>
+          )}
+          {activeAlgorithm === 'Simulated Annealing' && (
+            <div className="mt-4">
+              <label className="block text-gray-800">Temperature:</label>
+              <input
+                type="number"
+                value={temperature}
+                onChange={(e) => setTemperature(parseInt(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+              <label className="block text-gray-800 mt-4">Cooling Rate:</label>
+              <input
+                type="number"
+                step="0.001"
+                value={coolingRate}
+                onChange={(e) => setCoolingRate(parseFloat(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+              <label className="block text-gray-800 mt-4">Max Iterations:</label>
+              <input
+                type="number"
+                value={maxIterations}
+                onChange={(e) => setMaxIterations(parseInt(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+            </div>
+          )}
           {!loading && (
             <button type="submit"
               className='mt-4 mx-4 mb-[15px] rounded border-2 border-gray-200 px-7 pb-[8px] pt-[10px] text-sm font-bold uppercase leading-normal text-gray-800 transition duration-150 ease-in-out hover:border-neutral-300 hover:bg-neutral-200 focus:border-neutral-300 focus:text-gray-800 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-gray-600'
