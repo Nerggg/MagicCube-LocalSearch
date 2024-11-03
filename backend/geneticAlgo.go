@@ -6,8 +6,6 @@ import (
 )
 
 const (
-	populationSize = 100
-	maxGenerations = 1000
 	targetFitness  = 0
 )
 
@@ -132,13 +130,12 @@ func evolvePopulation(population [][][][]int) [][][][]int { // Ini fungsi buat m
 	return newPopulation
 }
 
-func geneticAlgorithm(cube *[][][]int) ([][][]int, int, int, []int) {
+func geneticAlgorithm(cube *[][][]int, populationSize int, maxGenerations int) ([][][]int, int, []int) {
 	population := initializePopulation(cube, populationSize)
 	generation := 0
-	stuckCount := 0
 	iterOF := []int{}
 	var bestState [][][]int
-	bestFitness := -5000000
+	bestFitness := -50000
 
 	for generation < maxGenerations {
 		population = evolvePopulation(population) // Ini populasinya berubah terus setiap iterasi jadi makin bagus
@@ -155,7 +152,7 @@ func geneticAlgorithm(cube *[][][]int) ([][][]int, int, int, []int) {
 		if bestFitness == targetFitness {
 			printCube(bestState)
 			fmt.Println("success")
-			return bestState, bestFitness, stuckCount, iterOF
+			return bestState, bestFitness, iterOF
 		}
 		generation++
 		iterOF = append(iterOF, bestFitness)
@@ -163,5 +160,5 @@ func geneticAlgorithm(cube *[][][]int) ([][][]int, int, int, []int) {
 
 	fmt.Printf("Best fitness: %d\n", bestFitness)
 	printCube(bestState)
-	return bestState, bestFitness, stuckCount, iterOF
+	return bestState, bestFitness, iterOF
 }
