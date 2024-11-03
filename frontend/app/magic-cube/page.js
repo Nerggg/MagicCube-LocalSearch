@@ -72,6 +72,8 @@ export default function Wikirace() {
   const handleSubmit = async (event) => {
     setSubmitted(false)
     event.preventDefault();
+
+    console.log("Handle Submit triggered")
     
     if (activeAlgorithm == ''){
       setErrorMessage("Please choose the algorithm.");

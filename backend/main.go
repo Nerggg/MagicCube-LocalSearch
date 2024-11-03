@@ -1,5 +1,14 @@
 package main
 
+import (
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+)
+
 func main() {
 	// arr := [][][]int{ // ini array yg udah perfect magic cube
 	// 	{
@@ -39,12 +48,25 @@ func main() {
 	// 	},
 	// }
 
-	var arr [][][]int = generateRandom5x5x5Array()
-	printCube(arr)
+	// var arr [][][]int = generateRandom5x5x5Array()
+	// printCube(arr)
 	// simulatedAnnealing(&arr, 10000, 0.999, 1000000)
 	// http.HandleFunc("/calculate")
 
 	// stochasticHillClimbing(&arr, 500000)
 	// steepestAscentHillClimbing(&arr)
 	// sidewaysMoveHillClimbing(&arr)
+	fmt.Println("Server is running on port 8080")
+	r := mux.NewRouter()
+
+	// Tentukan route yang Anda gunakan, misalnya:
+	r.HandleFunc("/search", searchHandler).Methods("GET", "POST")
+
+	// Konfigurasi CORS
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	originsOk := handlers.AllowedOrigins([]string{"http://localhost:3000"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"})
+
+	// Gunakan CORS middleware
+	log.Fatal(http.ListenAndServe(":8080", handlers.CORS(originsOk, headersOk, methodsOk)(r)))
 }
