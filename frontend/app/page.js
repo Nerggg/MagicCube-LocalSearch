@@ -50,12 +50,14 @@ export default function Home() {
   const [separateZ, setSeparateZ] = useState(1.1);
 
 
+
+
   return (
     <div className="bg-gray-100 text-gray-800 font-sans pb-12 min-h-screen">
       <Navbar />
 
       {/* Canvas Section */}
-      <div className="h-[70vh] w-[80vw] mx-auto mb-12">
+      <div className="card h-[70vh] w-[80vw] mx-auto mb-12">
         <Canvas>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
@@ -66,13 +68,13 @@ export default function Home() {
 
       <div className="flex justify-center pb-[60px] ">
       <div align="center h-[50px]">
-        <h1 className="text-5xl font-bold typing-animation"><u>Magic Cube</u> Solver</h1>
+        <h1 className="card text-5xl font-bold typing-animation"><u>Magic Cube</u> Solver</h1>
       </div>
 
       </div>
 
-      {/* WikiRace Information Card */}
-      <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[70%] mx-auto mb-12">
+      {/* MagicCube Information Card */}
+      <div className="card bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[70%] mx-auto mb-12">
         <h3 className="text-3xl font-bold text-center mb-4">
           What is <span className="underline">Magic Cube</span>?
         </h3>
@@ -88,35 +90,35 @@ export default function Home() {
       <div className="flex flex-col md:flex-row justify-around w-full gap-6">
 
 {/* Hill Climbing Card */}
-<div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
+<div  className="card bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
   <h2 className="text-2xl font-bold mb-4">Hill Climbing</h2>
   <p className="text-gray-700 text-justify leading-relaxed mb-6">
-    Breadth-First Search (BFS) is a fundamental algorithm used in graph theory and computer science. It operates by exploring all the vertices (nodes) of a graph systematically, starting from a designated source vertex. BFS guarantees the shortest path in an unweighted graph.
-  </p>
+  Hill Climbing is an optimization algorithm used to find the best solution within a search space by iteratively moving toward improvements. The algorithm starts with an initial or random solution, then evaluates neighboring solutions, moving towards the direction that increases the objective value locally. If a better neighboring solution is found, the algorithm moves to that solution. This process continues until it reaches a local or global peak, where no better neighbors are available. Although efficient, Hill Climbing can get stuck at local maxima and often does not guarantee a globally optimal solution.
+</p>
   <div className="flex justify-center">
-    <img src="/BFS.gif" alt="BFS Algorithm" className="h-60 rounded-lg" />
+    <img src="/Hill_climb.png" alt="Hill Climb Algorithm" className="h-60 rounded-lg" />
   </div>
 </div>
 
 {/* Simulated Annealing Card */}
-<div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
+<div className="card bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
   <h2 className="text-2xl font-bold mb-4">Simulated Annealing</h2>
   <p className="text-gray-700 text-justify leading-relaxed mb-6">
-    Iterative Deepening Search (IDS) is a systematic search algorithm that combines Depth-First Search (DFS) and Breadth-First Search (BFS) principles. IDS gradually increases the depth limit until the target goal is found, making it suitable for scenarios with unknown solution depths or memory constraints.
+    Simulated Annealing is an optimization algorithm inspired by the annealing process in metallurgy, where materials are heated and then slowly cooled to reach a stable state. The algorithm explores the search space by randomly selecting neighboring solutions and deciding whether to move towards them based on a probability that decreases over time. Initially, it allows moves to worse solutions to escape local optima, but as the "temperature" lowers, the algorithm becomes more selective, converging towards an optimal or near-optimal solution. This makes Simulated Annealing effective for complex problems where finding a global optimum is challenging.
   </p>
   <div className="flex justify-center">
-    <img src="/IDS.gif" alt="IDS Algorithm" className="h-80 rounded-lg" />
+    <img src="/simulated_annealing.gif" alt="SA Algorithm" className="h-80 rounded-lg" />
   </div>
 </div>
 
 {/* Genetic Algorithm Card */}
-<div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
+<div className="card bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full md:w-[30%] mx-auto">
   <h2 className="text-2xl font-bold mb-4">Genetic Algorithm</h2>
   <p className="text-gray-700 text-justify leading-relaxed mb-6">
-    Iterative Deepening Search (IDS) is a systematic search algorithm that combines Depth-First Search (DFS) and Breadth-First Search (BFS) principles. IDS gradually increases the depth limit until the target goal is found, making it suitable for scenarios with unknown solution depths or memory constraints.
+    A Genetic Algorithm (GA) is an optimization and search technique inspired by the principles of natural selection and genetics. It operates by creating a population of potential solutions and evolving them over generations to improve performance. Each generation involves processes like selection, crossover (recombination), and mutation to produce new solutions. The fittest solutions are more likely to be selected and passed on to the next generation, allowing the algorithm to explore and exploit the search space effectively. GAs are particularly useful for solving complex problems where traditional optimization methods struggle to find global optima.
   </p>
   <div className="flex justify-center">
-    <img src="/IDS.gif" alt="IDS Algorithm" className="h-80 rounded-lg" />
+    <img src="/genetic_algorithm.png" alt="Genetic Algorithm" className="h-80 rounded-lg" />
   </div>
 </div>
 </div>

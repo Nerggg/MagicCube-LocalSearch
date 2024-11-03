@@ -65,3 +65,23 @@ body {
     border-color: black;
   }
 }
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  opacity: 0; /* Start hidden */
+  animation: fadeInUp 0.7s ease forwards; /* Animate */
+}
+
+.card.visible {
+  opacity: 1; /* Visible when class is added */
+}
