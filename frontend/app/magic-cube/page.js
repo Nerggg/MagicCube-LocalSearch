@@ -57,8 +57,10 @@ export default function Magiccube() {
   const [separateX, setSeparateX] = useState(1.1);
   const [separateY, setSeparateY] = useState(1.1);
   const [separateZ, setSeparateZ] = useState(1.1);
+  const [separateXresult, setSeparateXresult] = useState(1.1);
+  const [separateYresult, setSeparateYresult] = useState(1.1);
+  const [separateZresult, setSeparateZresult] = useState(1.1);
   const [matrixData, setMatrixData] = useState(generateRandomMatrixData(5, 5, 5, 1, 125));
-  const [matrixResult, setMatrixResult] = useState(null);
   const [populationSize, setPopulationSize] = useState(0);
   const [maxGenerations, setMaxGenerations] = useState(0);
   const [maxStateGeneration, setMaxStateGeneration] = useState(0);
@@ -67,6 +69,8 @@ export default function Magiccube() {
   const [temperature, setTemperature] = useState(0); 
   const [coolingRate, setCoolingRate] = useState(0); 
   const [maxIterations, setMaxIterations] = useState(0); 
+  const [visibleLevel, setVisibleLevel] = useState([0, matrixData.length - 1]);
+  const [visibleLevelresult, setVisibleLevelresult] = useState([0, 4]);
 
   const handleGenerateRandom = () => {
     setMatrixData(generateRandomMatrixData(5, 5, 5, 1, 125)); // Generate new random data
@@ -91,6 +95,76 @@ export default function Magiccube() {
       setErrorMessage(null);
       return;
     }
+
+    // Error handling based on selected algorithm
+    if (activeAlgorithm === 'Genetic Algorithm') {
+      if (!populationSize || populationSize <= 0) {
+        setErrorMessage("Please enter a valid Population Size.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (!maxGenerations || maxGenerations <= 0) {
+        setErrorMessage("Please enter a valid Max Generations.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
+    if (activeAlgorithm === 'Stochastic Hill Climbing') {
+      if (!maxStateGeneration || maxStateGeneration <= 0) {
+        setErrorMessage("Please enter a valid Max State Generation.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
+    if (activeAlgorithm === 'Random Restart Hill Climbing') {
+      if (!restartChance || restartChance <= 0 || restartChance > 100) {
+        setErrorMessage("Please enter a valid Restart Chance (between 1 and 100).");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (!restartAmount || restartAmount <= 0) {
+        setErrorMessage("Please enter a valid Maximum Restart.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
+    if (activeAlgorithm === 'Simulated Annealing') {
+      if (!temperature || temperature <= 0) {
+        setErrorMessage("Please enter a valid Temperature.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (coolingRate == null || coolingRate <= 0 || coolingRate >= 1) {
+        setErrorMessage("Please enter a valid Cooling Rate (between 0 and 1).");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (!maxIterations || maxIterations <= 0) {
+        setErrorMessage("Please enter a valid Max Iterations.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
     setLoading(true);
     try {
       // TODO: frontend request to backend server endpoint
@@ -120,9 +194,9 @@ export default function Magiccube() {
 
 
 // Button style base
-const baseStyle = "mx-4 rounded border-2 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0";
+const baseStyle = "mx-4 rounded border-2 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0 bg-gray-200 text-gray-700 border-gray-300";
 const dynamicStyle = (isActive) => 
-  `${baseStyle} ${isActive ? 'border-neutral-300 text-gray-800 bg-neutral-100' : 'border-neutral-200 text-gray-600 hover:border-neutral-300 hover:bg-neutral-200 hover:text-gray-800'}`;
+  `${baseStyle} ${isActive ? 'border-gray-400 text-gray-900 bg-gray-300' : 'hover:border-gray-400 hover:bg-gray-300 hover:text-gray-900'}`;
 
 return (
   <div className="bg-gray-100 text-gray-800 font-sans pb-12 min-h-screen">
@@ -133,7 +207,14 @@ return (
         <Canvas>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
-          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} rotationSpeed={0} />
+          <CubeMatrix
+            data={matrixData}
+            separateX={separateX}
+            separateY={separateY}
+            separateZ={separateZ}
+            rotationSpeed={0}
+            visibleLevel={visibleLevel}
+          />
           <OrbitControls enableRotate={true} enablePan={true} enableZoom={true} />
         </Canvas>
 
@@ -183,6 +264,20 @@ return (
               style={{ accentColor: "#1F2937", color: "#1F2937" }}
             />
           </div>
+          <div>
+            <label className="block">Select Z Level:</label>
+            <input
+              type="range"
+              min="0"
+              max={matrixData.length - 1}
+              step="1"
+              value={visibleLevel[1]}
+              onChange={(e) => setVisibleLevel([0, parseInt(e.target.value)])}
+              className="w-full h-2 bg-gray-200 rounded-full"
+              style={{ accentColor: "#1F2937", color: "#1F2937" }}
+            />
+            <p>Current Level: {visibleLevel[1]}</p>
+          </div>
         </div>
       </div>
       {/* Button to generate random input */}
@@ -198,7 +293,7 @@ return (
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col items-center'>
           <h4 className="mb-2 text-xl font-semibold text-gray-800">Algorithm Type</h4>
-          <div>
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
             <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Steepest Ascent Hill Climbing')}
@@ -213,14 +308,14 @@ return (
             >
               Sideways Move Hill Climbing
             </button>
-          <button
+            <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Random Restart Hill Climbing')}
               onClick={() => handleAlgorithmClick('Random Restart Hill Climbing')}
             >
               Random Restart Hill Climbing
             </button>
-          <button
+            <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Stochastic Hill Climbing')}
               onClick={() => handleAlgorithmClick('Stochastic Hill Climbing')}
@@ -316,11 +411,14 @@ return (
             </div>
           )}
           {!loading && (
-            <button type="submit"
-              className='mt-4 mx-4 mb-[15px] rounded border-2 border-gray-200 px-7 pb-[8px] pt-[10px] text-sm font-bold uppercase leading-normal text-gray-800 transition duration-150 ease-in-out hover:border-neutral-300 hover:bg-neutral-200 focus:border-neutral-300 focus:text-gray-800 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-gray-600'
-            >
+          <button type="submit"
+              className="mt-4 mx-4 mb-[15px] rounded border-2 border-neutral-300 px-7 pb-[8px] pt-[10px] text-sm font-bold uppercase leading-normal text-gray-700 bg-neutral-200 transition duration-150 ease-in-out 
+              hover:border-neutral-400 hover:bg-neutral-300 hover:text-gray-900 
+              focus:border-neutral-400 focus:bg-neutral-300 focus:text-gray-900 focus:outline-none focus:ring-0 
+              active:border-neutral-500 active:bg-neutral-400 active:text-gray-80"
+          >
               Submit!
-            </button>
+          </button>
           )}
         </div>
       </form>
@@ -345,9 +443,10 @@ return (
                 <directionalLight position={[5, 5, 5]} intensity={1} />
                 <CubeMatrix
                   data={results.finalState}
-                  separateX={separateX}
-                  separateY={separateY}
-                  separateZ={separateZ}
+                  separateX={separateXresult}
+                  separateY={separateYresult}
+                  separateZ={separateZresult}
+                  visibleLevel={visibleLevelresult}
                   rotationSpeed={0}
                 />
                 <OrbitControls enableRotate={true} enablePan={true} enableZoom={true} />
@@ -363,8 +462,8 @@ return (
                   min="1.0"
                   max="2.5"
                   step="0.1"
-                  value={separateX}
-                  onChange={(e) => setSeparateX(parseFloat(e.target.value))}
+                  value={separateXresult}
+                  onChange={(e) => setSeparateXresult(parseFloat(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-full"
                   style={{ accentColor: "#1F2937", color: "#1F2937" }}
                 />
@@ -376,8 +475,8 @@ return (
                   min="1.0"
                   max="2.5"
                   step="0.1"
-                  value={separateY}
-                  onChange={(e) => setSeparateY(parseFloat(e.target.value))}
+                  value={separateYresult}
+                  onChange={(e) => setSeparateYresult(parseFloat(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-full"
                   style={{ accentColor: "#1F2937", color: "#1F2937" }}
                 />
@@ -389,16 +488,40 @@ return (
                   min="1.0"
                   max="2.5"
                   step="0.1"
-                  value={separateZ}
-                  onChange={(e) => setSeparateZ(parseFloat(e.target.value))}
+                  value={separateZresult}
+                  onChange={(e) => setSeparateZresult(parseFloat(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-full"
                   style={{ accentColor: "#1F2937", color: "#1F2937" }}
                 />
+              </div>
+              <div>
+                <label className="block">Select Z Level:</label>
+                <input
+                  type="range"
+                  min="0"
+                  max={matrixData.length - 1}
+                  step="1"
+                  value={visibleLevelresult[1]}
+                  onChange={(e) => setVisibleLevelresult([0, parseInt(e.target.value)])}
+                  className="w-full h-2 bg-gray-200 rounded-full"
+                  style={{ accentColor: "#1F2937", color: "#1F2937" }}
+                />
+                <p>Current Level: {visibleLevelresult[1]}</p>
               </div>
             </div>
             </div>
           </div>
           <p className="text-gray-800 text-center my-4 text-xl">Found <strong>{activeAlgorithm}</strong> solution in <strong>{(results.duration / 1000).toFixed(2)} seconds</strong>!</p>
+          <p className="text-gray-800 text-center mb-4 text-xl">Final State Objective Value: <strong>{results.finalValue}</strong></p>
+          {(activeAlgorithm === 'Steepest Ascent Hill Climbing' || activeAlgorithm === 'Stochastic Hill Climbing' || activeAlgorithm === 'Sideways Move Hill Climbing' || activeAlgorithm === 'Genetic Algorithm') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Iterations needed: <strong>{results.iterOF.length}</strong></p>
+          )}
+           {(activeAlgorithm === 'Genetic Algorithm') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Population Size: <strong>{results.populationSize}</strong></p>
+          )}
+           {(activeAlgorithm === 'Simulated Annealing') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Stucks Count: <strong>{results.stuckCount}</strong></p>
+          )}
           <ObjectiveChart iterOF={results.iterOF} />
         </div>
       )}
