@@ -22,7 +22,7 @@ Program pencarian solusi **Diagonal Magic Cube** berukuran 5x5x5 ini dirancang u
 
 ## Cara Menjalankan Aplikasi
 
-1. Clone repositori ini
+1. Buka terminal dan clone repositori ini
 
 ```
 git clone https://github.com/Nerggg/MagicCube-LocalSearch
@@ -31,8 +31,7 @@ git clone https://github.com/Nerggg/MagicCube-LocalSearch
 2. Buka terminal dan navigasi ke direktori src lalu navigasi ke direktori frontend aplikasi
 
 ```
-cd src
-cd frontend
+cd MagicCube-LocalSearch/src/frontend/
 ```
 
 3. Install dependencies dari aplikasi
@@ -50,8 +49,7 @@ npm run dev
 5. Buka terminal lain dan navigasi ke direktori src lalu navigasi ke direktori backend aplikasi
 
 ```
-cd src
-cd backend
+cd MagicCube-LocalSearch/src/backend/
 ```
 
 6. Jalankan backend dari aplikasi
