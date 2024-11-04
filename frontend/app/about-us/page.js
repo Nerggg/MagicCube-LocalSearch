@@ -22,7 +22,7 @@ export default function AboutUs() {
           name: 'Christian Justin Hendrawan',
           nim: '13522135',
           role: 'Genetic Algorithm',
-          email: '13522150@std.stei.itb.ac.id',
+          email: '13522135@std.stei.itb.ac.id',
           image: '/chris.jpg',
       },
         {
