@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 func steepestAscentHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
 	iterOF := []int{}
@@ -102,4 +105,24 @@ func stochasticHillClimbing(cube *[][][]int, NMax int) ([][][]int, int, int, []i
 	}
 
 	return currentState, currentValue, 0, iterOF
+}
+
+func randomRestartHillClimbing(cube *[][][]int, p float64) ([][][]int, int, int, []int) {
+	var currentValue int
+	iterOF := []int{}
+	var temp int
+	fmt.Println(p)
+	for {
+		*cube, currentValue, temp, iterOF = steepestAscentHillClimbing(cube)
+		param := rand.Float64()
+		if param >= p {
+			fmt.Println("not restarting")
+			break
+		}
+		fmt.Println("restarting")
+		fmt.Println(param)
+		*cube = generateRandom5x5x5Array()
+	}
+
+	return *cube, currentValue, temp, iterOF
 }

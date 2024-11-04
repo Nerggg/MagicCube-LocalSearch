@@ -62,6 +62,7 @@ export default function Magiccube() {
   const [populationSize, setPopulationSize] = useState(0);
   const [maxGenerations, setMaxGenerations] = useState(0);
   const [maxStateGeneration, setMaxStateGeneration] = useState(0);
+  const [restartChance, setRestartChance] = useState(0);
   const [temperature, setTemperature] = useState(0); 
   const [coolingRate, setCoolingRate] = useState(0); 
   const [maxIterations, setMaxIterations] = useState(0); 
@@ -99,6 +100,7 @@ export default function Magiccube() {
         maxGenerations: activeAlgorithm === 'Genetic Algorithm' ? maxGenerations : undefined,
         temperature: activeAlgorithm === 'Simulated Annealing' ? temperature : undefined,
         maxStateGeneration: activeAlgorithm === 'Stochastic Hill Climbing' ? maxStateGeneration : undefined,
+        restartChance: activeAlgorithm === 'Random Restart Hill Climbing' ? restartChance : undefined,
         coolingRate: activeAlgorithm === 'Simulated Annealing' ? coolingRate : undefined,
         maxIterations: activeAlgorithm === 'Simulated Annealing' ? maxIterations : undefined
       });
@@ -263,6 +265,17 @@ return (
                 type="number"
                 value={maxStateGeneration}
                 onChange={(e) => setMaxStateGeneration(parseInt(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+            </div>
+          )}
+          {activeAlgorithm === 'Random Restart Hill Climbing' && (
+            <div className="mt-4">
+              <label className="block mb-2 text-gray-800">Restart Chance (in %):</label>
+              <input
+                type="number"
+                value={restartChance}
+                onChange={(e) => setRestartChance(parseFloat(e.target.value))}
                 className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
               />
             </div>
