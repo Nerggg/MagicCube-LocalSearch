@@ -299,7 +299,7 @@ func copy3DArray(original [][][]int) [][][]int {
 func generateMaximumSuccessor(originalArr [][][]int) [][][]int {
 	store := [][]int{}
 	result := [][][]int{}
-	maxTemp := 0
+	maxTemp := -999999
 
 	for i1 := 0; i1 < len(originalArr); i1++ {
 		for j1 := 0; j1 < len(originalArr[i1]); j1++ {
