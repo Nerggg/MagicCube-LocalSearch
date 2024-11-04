@@ -61,6 +61,7 @@ export default function Magiccube() {
   const [matrixResult, setMatrixResult] = useState(null);
   const [populationSize, setPopulationSize] = useState(0);
   const [maxGenerations, setMaxGenerations] = useState(0);
+  const [maxStateGeneration, setMaxStateGeneration] = useState(0);
   const [temperature, setTemperature] = useState(0); 
   const [coolingRate, setCoolingRate] = useState(0); 
   const [maxIterations, setMaxIterations] = useState(0); 
@@ -97,6 +98,7 @@ export default function Magiccube() {
         populationSize: activeAlgorithm === 'Genetic Algorithm' ? populationSize : undefined,
         maxGenerations: activeAlgorithm === 'Genetic Algorithm' ? maxGenerations : undefined,
         temperature: activeAlgorithm === 'Simulated Annealing' ? temperature : undefined,
+        maxStateGeneration: activeAlgorithm === 'Stochastic Hill Climbing' ? maxStateGeneration : undefined,
         coolingRate: activeAlgorithm === 'Simulated Annealing' ? coolingRate : undefined,
         maxIterations: activeAlgorithm === 'Simulated Annealing' ? maxIterations : undefined
       });
@@ -193,13 +195,6 @@ return (
         <div className='flex flex-col items-center'>
           <h4 className="mb-2 text-xl font-semibold text-gray-800">Algorithm Type</h4>
           <div>
-          <button
-              type="button"
-              className={dynamicStyle(activeAlgorithm === 'Stochastic Hill Climbing')}
-              onClick={() => handleAlgorithmClick('Stochastic Hill Climbing')}
-            >
-              Stochastic Hill Climbing
-            </button>
             <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Steepest Ascent Hill Climbing')}
@@ -213,6 +208,20 @@ return (
               onClick={() => handleAlgorithmClick('Sideways Move Hill Climbing')}
             >
               Sideways Move Hill Climbing
+            </button>
+          <button
+              type="button"
+              className={dynamicStyle(activeAlgorithm === 'Random Restart Hill Climbing')}
+              onClick={() => handleAlgorithmClick('Random Restart Hill Climbing')}
+            >
+              Random Restart Hill Climbing
+            </button>
+          <button
+              type="button"
+              className={dynamicStyle(activeAlgorithm === 'Stochastic Hill Climbing')}
+              onClick={() => handleAlgorithmClick('Stochastic Hill Climbing')}
+            >
+              Stochastic Hill Climbing
             </button>
             <button
               type="button"
@@ -243,6 +252,17 @@ return (
                 type="number"
                 value={maxGenerations}
                 onChange={(e) => setMaxGenerations(parseInt(e.target.value))}
+                className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+            </div>
+          )}
+          {activeAlgorithm === 'Stochastic Hill Climbing' && (
+            <div className="mt-4">
+              <label className="block mb-2 text-gray-800">Max State Generation:</label>
+              <input
+                type="number"
+                value={maxStateGeneration}
+                onChange={(e) => setMaxStateGeneration(parseInt(e.target.value))}
                 className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
               />
             </div>
