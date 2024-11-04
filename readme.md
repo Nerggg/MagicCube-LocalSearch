@@ -70,6 +70,5 @@ _Completed_
 | ----------------------------- | ---------------------------------------------- |
 | Frontend                      | [13522124](https://github.com/alandmprtma)     |
 | Hill Climbing Algorithm       | [13522147](https://github.com/Nerggg)          |
-| Simulated Annealing Algorithm | [13522126](https://github.com/rizqikapratamaa) |
+| Simulated Annealing Algorithm and Backend Integration | [13522126](https://github.com/rizqikapratamaa) |
 | Genetic Algorithm             | [13522135](https://github.com/ChrisCS50X)      |
-| Backend Integration           | [13522126](https://github.com/rizqikapratamaa) |
