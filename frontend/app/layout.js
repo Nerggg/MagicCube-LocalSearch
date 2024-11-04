@@ -2,8 +2,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Lemanspedia - WikiRace Program",
-  description: "WikiRace Program with BFS and IDS Algorithms",
+  title: "MCube - Magic Cube Solver Program",
+  description: "Magic Cube Solver with Local Search Algorithms",
 };
 
 export default function RootLayout({ children }) {
