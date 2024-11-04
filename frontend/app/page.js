@@ -61,7 +61,7 @@ export default function Home() {
         <Canvas>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
-          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} rotationSpeed={0.01} />
+          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} rotationSpeed={0.01} visibleLevel={[0,4]} />
           <OrbitControls enableRotate={false} enablePan={false} enableZoom={false} />
         </Canvas>
       </div>

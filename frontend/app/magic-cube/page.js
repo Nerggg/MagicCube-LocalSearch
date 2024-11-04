@@ -57,8 +57,10 @@ export default function Magiccube() {
   const [separateX, setSeparateX] = useState(1.1);
   const [separateY, setSeparateY] = useState(1.1);
   const [separateZ, setSeparateZ] = useState(1.1);
+  const [separateXresult, setSeparateXresult] = useState(1.1);
+  const [separateYresult, setSeparateYresult] = useState(1.1);
+  const [separateZresult, setSeparateZresult] = useState(1.1);
   const [matrixData, setMatrixData] = useState(generateRandomMatrixData(5, 5, 5, 1, 125));
-  const [matrixResult, setMatrixResult] = useState(null);
   const [populationSize, setPopulationSize] = useState(0);
   const [maxGenerations, setMaxGenerations] = useState(0);
   const [maxStateGeneration, setMaxStateGeneration] = useState(0);
@@ -67,6 +69,8 @@ export default function Magiccube() {
   const [temperature, setTemperature] = useState(0); 
   const [coolingRate, setCoolingRate] = useState(0); 
   const [maxIterations, setMaxIterations] = useState(0); 
+  const [visibleLevel, setVisibleLevel] = useState([0, matrixData.length - 1]);
+  const [visibleLevelresult, setVisibleLevelresult] = useState([0, 4]);
 
   const handleGenerateRandom = () => {
     setMatrixData(generateRandomMatrixData(5, 5, 5, 1, 125)); // Generate new random data
@@ -133,7 +137,14 @@ return (
         <Canvas>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
-          <CubeMatrix data={matrixData} separateX={separateX} separateY={separateY} separateZ={separateZ} rotationSpeed={0} />
+          <CubeMatrix
+            data={matrixData}
+            separateX={separateX}
+            separateY={separateY}
+            separateZ={separateZ}
+            rotationSpeed={0}
+            visibleLevel={visibleLevel}
+          />
           <OrbitControls enableRotate={true} enablePan={true} enableZoom={true} />
         </Canvas>
 
@@ -183,6 +194,20 @@ return (
               style={{ accentColor: "#1F2937", color: "#1F2937" }}
             />
           </div>
+          <div>
+            <label className="block">Select Z Level:</label>
+            <input
+              type="range"
+              min="0"
+              max={matrixData.length - 1}
+              step="1"
+              value={visibleLevel[1]}
+              onChange={(e) => setVisibleLevel([0, parseInt(e.target.value)])}
+              className="w-full h-2 bg-gray-200 rounded-full"
+              style={{ accentColor: "#1F2937", color: "#1F2937" }}
+            />
+            <p>Current Level: {visibleLevel[1]}</p>
+          </div>
         </div>
       </div>
       {/* Button to generate random input */}
@@ -198,7 +223,7 @@ return (
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col items-center'>
           <h4 className="mb-2 text-xl font-semibold text-gray-800">Algorithm Type</h4>
-          <div>
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
             <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Steepest Ascent Hill Climbing')}
@@ -213,14 +238,14 @@ return (
             >
               Sideways Move Hill Climbing
             </button>
-          <button
+            <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Random Restart Hill Climbing')}
               onClick={() => handleAlgorithmClick('Random Restart Hill Climbing')}
             >
               Random Restart Hill Climbing
             </button>
-          <button
+            <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Stochastic Hill Climbing')}
               onClick={() => handleAlgorithmClick('Stochastic Hill Climbing')}
@@ -345,9 +370,10 @@ return (
                 <directionalLight position={[5, 5, 5]} intensity={1} />
                 <CubeMatrix
                   data={results.finalState}
-                  separateX={separateX}
-                  separateY={separateY}
-                  separateZ={separateZ}
+                  separateX={separateXresult}
+                  separateY={separateYresult}
+                  separateZ={separateZresult}
+                  visibleLevel={visibleLevelresult}
                   rotationSpeed={0}
                 />
                 <OrbitControls enableRotate={true} enablePan={true} enableZoom={true} />
@@ -363,8 +389,8 @@ return (
                   min="1.0"
                   max="2.5"
                   step="0.1"
-                  value={separateX}
-                  onChange={(e) => setSeparateX(parseFloat(e.target.value))}
+                  value={separateXresult}
+                  onChange={(e) => setSeparateXresult(parseFloat(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-full"
                   style={{ accentColor: "#1F2937", color: "#1F2937" }}
                 />
@@ -376,8 +402,8 @@ return (
                   min="1.0"
                   max="2.5"
                   step="0.1"
-                  value={separateY}
-                  onChange={(e) => setSeparateY(parseFloat(e.target.value))}
+                  value={separateYresult}
+                  onChange={(e) => setSeparateYresult(parseFloat(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-full"
                   style={{ accentColor: "#1F2937", color: "#1F2937" }}
                 />
@@ -389,11 +415,25 @@ return (
                   min="1.0"
                   max="2.5"
                   step="0.1"
-                  value={separateZ}
-                  onChange={(e) => setSeparateZ(parseFloat(e.target.value))}
+                  value={separateZresult}
+                  onChange={(e) => setSeparateZresult(parseFloat(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-full"
                   style={{ accentColor: "#1F2937", color: "#1F2937" }}
                 />
+              </div>
+              <div>
+                <label className="block">Select Z Level:</label>
+                <input
+                  type="range"
+                  min="0"
+                  max={matrixData.length - 1}
+                  step="1"
+                  value={visibleLevelresult[1]}
+                  onChange={(e) => setVisibleLevelresult([0, parseInt(e.target.value)])}
+                  className="w-full h-2 bg-gray-200 rounded-full"
+                  style={{ accentColor: "#1F2937", color: "#1F2937" }}
+                />
+                <p>Current Level: {visibleLevelresult[1]}</p>
               </div>
             </div>
             </div>
