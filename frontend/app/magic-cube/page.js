@@ -194,16 +194,16 @@ export default function Magiccube() {
 
 
 // Button style base
-const baseStyle = "mx-4 rounded border-2 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0 bg-gray-200 text-gray-700 border-gray-300";
+const baseStyle = "mx-4 rounded border-2 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2";
 const dynamicStyle = (isActive) => 
-  `${baseStyle} ${isActive ? 'border-gray-400 text-gray-900 bg-gray-300' : 'hover:border-gray-400 hover:bg-gray-300 hover:text-gray-900'}`;
+  `${baseStyle} ${isActive ? 'border-blue-500 text-white bg-blue-500' : 'border-gray-300 text-gray-700 bg-white hover:bg-blue-500 hover:text-white hover:transform hover:-translate-x-0.5 hover:scale-130 hover:-translate-y-1'}`;
 
 return (
   <div className="bg-gray-100 text-gray-800 font-sans pb-12 min-h-screen">
     <Navbar />    
     <div className="flex flex-col h-[60vh] w-[70vw] items-center mt-[20px] mx-auto mb-12 relative">
       {/* Canvas Container with Border */}
-      <div className="border-2 border-gray-300 rounded-lg p-4 mb-[30px] w-full h-full relative">
+      <div className="border-2 border-gray-300 rounded-lg p-4 mb-[30px] w-full h-full relative bg-white shadow-lg">
         <Canvas>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
@@ -293,7 +293,7 @@ return (
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col items-center'>
           <h4 className="mb-2 text-xl font-semibold text-gray-800">Algorithm Type</h4>
-          <div className="flex flex-wrap justify-center gap-4 mt-4">
+          <div className="flex flex-wrap justify-center gap-4 mt-4 mb-5">
             <button
               type="button"
               className={dynamicStyle(activeAlgorithm === 'Steepest Ascent Hill Climbing')}
@@ -413,7 +413,7 @@ return (
           {!loading && (
           <button type="submit"
               className="mt-4 mx-4 mb-[15px] rounded border-2 border-neutral-300 px-7 pb-[8px] pt-[10px] text-sm font-bold uppercase leading-normal text-gray-700 bg-neutral-200 transition duration-150 ease-in-out 
-              hover:border-neutral-400 hover:bg-neutral-300 hover:text-gray-900 
+              hover:border-blue-500 hover:bg-blue-500 hover:text-white
               focus:border-neutral-400 focus:bg-neutral-300 focus:text-gray-900 focus:outline-none focus:ring-0 
               active:border-neutral-500 active:bg-neutral-400 active:text-gray-80"
           >
