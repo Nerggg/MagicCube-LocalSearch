@@ -516,6 +516,9 @@ return (
           {(activeAlgorithm === 'Steepest Ascent Hill Climbing' || activeAlgorithm === 'Stochastic Hill Climbing' || activeAlgorithm === 'Sideways Move Hill Climbing' || activeAlgorithm === 'Genetic Algorithm') &&(
             <p className="text-gray-800 text-center mb-4 text-xl">Iterations needed: <strong>{results.iterOF.length}</strong></p>
           )}
+          {(activeAlgorithm === 'Random Restart Hill Climbing') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Restarts: <strong>{results.restarts}</strong></p>
+          )}
            {(activeAlgorithm === 'Genetic Algorithm') &&(
             <p className="text-gray-800 text-center mb-4 text-xl">Population Size: <strong>{results.populationSize}</strong></p>
           )}

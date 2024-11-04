@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import icon from '../public/Mcube.png';
+import icon from '../public/MCube.png';
 
 const Navbar = () => {
     return (

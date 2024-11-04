@@ -18,6 +18,7 @@ type SearchRequest struct {
 	MaxStateGeneration int       `json:"maxStateGeneration,omitempty"` // Optional field for Simulated Annealing
 	RestartChance      float64   `json:"restartChance,omitempty"`      // Optional field for Random Restart Hill Climbing
 	RestartAmount      int       `json:"restartAmount,omitempty"`      // Optional field for Random Restart Hill Climbing
+	Restarts           int       `json:"restarts,omitempty"`           // Optional field for Random Restart Hill Climbing
 }
 
 var lastResult map[string]interface{}
@@ -54,7 +55,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now()
 		var finalState [][][]int
 		var iterOF []int
-		var finalValue, stuckCount int
+		var finalValue, stuckCount, restarts int
 
 		// Jalankan algoritma berdasarkan permintaan
 		switch requestData.Algorithm {
@@ -86,7 +87,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		case "Random Restart Hill Climbing":
-			finalState, finalValue, stuckCount, iterOF = randomRestartHillClimbing(&requestData.Cube, requestData.RestartChance/100.0, requestData.RestartAmount)
+			finalState, finalValue, stuckCount, iterOF, restarts = randomRestartHillClimbing(&requestData.Cube, requestData.RestartChance/100.0, requestData.RestartAmount)
 			duration := time.Since(startTime).Milliseconds()
 			fmt.Printf("Duration: %d ms\n", duration)
 			lastResult = map[string]interface{}{
@@ -95,6 +96,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 				"stuckCount": stuckCount,
 				"duration":   duration,
 				"iterOF":     iterOF,
+				"restarts":   restarts,
 			}
 
 		case "Steepest Ascent Hill Climbing":
