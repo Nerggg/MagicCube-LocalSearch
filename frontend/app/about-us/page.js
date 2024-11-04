@@ -63,9 +63,9 @@ export default function AboutUs() {
         <div className="bg-gray-100 text-gray-800 font-sans min-h-screen pb-12">
             <Navbar />
             <div className="text-center mt-10">
-                <h1 className="text-5xl font-bold text-gray-800 underline mb-4">LEMANSPEDIA CONTRIBUTORS</h1>
+                <h1 className="text-5xl font-bold text-gray-800 underline mb-4">MCUBE CONTRIBUTORS</h1>
                 <h3 className="text-xl text-gray-700 mx-[50px] leading-relaxed">
-                    The main objective of this project is to create a WikiRace program with Breadth First Search (BFS) and Iterative Deepening Search (IDS) algorithms.
+                    The main objective of this project is to create a Magic Cube Solver program with Steepest Ascent Hill Climbing, Sideways Move Hill Climbing, Random Restart Hill Climbing, Stochastic Hill Climbing, Simulated Annealing, and Genetic algorithms.
                 </h3>
             </div>
 
