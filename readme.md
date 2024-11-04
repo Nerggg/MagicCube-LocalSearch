@@ -2,7 +2,7 @@
 
 ## ✨ Deskripsi Program
 
-<p>Program pencarian solusi **Diagonal Magic Cube** berukuran 5x5x5 ini dirancang untuk mengimplementasikan tiga algoritma pencarian lokal, yaitu Hill Climbing, Simulated Annealing, dan Genetic Algorithm. Pengguna dapat melakukan eksperimen dengan menjalankan setiap algoritma beberapa kali, mengamati perubahan nilai **objective function**, durasi proses, dan konsistensi hasil pencarian. Program ini juga menyediakan visualisasi dari kondisi awal dan akhir kubus, memudahkan pengguna untuk memantau perkembangan solusi dalam tiap iterasi. Dengan pendekatan ini, aplikasi bertujuan untuk memberikan pemahaman mendalam tentang performa algoritma pencarian lokal dalam menyelesaikan permasalahan kompleks.</p>
+Program pencarian solusi **Diagonal Magic Cube** berukuran 5x5x5 ini dirancang untuk mengimplementasikan tiga algoritma pencarian lokal, yaitu Hill Climbing, Simulated Annealing, dan Genetic Algorithm. Pengguna dapat melakukan eksperimen dengan menjalankan setiap algoritma beberapa kali, mengamati perubahan nilai **objective function**, durasi proses, dan konsistensi hasil pencarian. Program ini juga menyediakan visualisasi dari kondisi awal dan akhir kubus, memudahkan pengguna untuk memantau perkembangan solusi dalam tiap iterasi. Dengan pendekatan ini, aplikasi bertujuan untuk memberikan pemahaman mendalam tentang performa algoritma pencarian lokal dalam menyelesaikan permasalahan kompleks.
 
 ## ✨ Daftar Persyaratan
 
