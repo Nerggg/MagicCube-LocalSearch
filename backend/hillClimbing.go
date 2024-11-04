@@ -107,18 +107,20 @@ func stochasticHillClimbing(cube *[][][]int, NMax int) ([][][]int, int, int, []i
 	return currentState, currentValue, 0, iterOF
 }
 
-func randomRestartHillClimbing(cube *[][][]int, p float64) ([][][]int, int, int, []int) {
+func randomRestartHillClimbing(cube *[][][]int, p float64, n int) ([][][]int, int, int, []int) {
 	var currentValue int
 	iterOF := []int{}
 	var temp int
 	fmt.Println(p)
+	i := 0
 	for {
 		*cube, currentValue, temp, iterOF = steepestAscentHillClimbing(cube)
 		param := rand.Float64()
-		if param >= p {
+		if param >= p || i == n-1 {
 			fmt.Println("not restarting")
 			break
 		}
+		i++
 		fmt.Println("restarting")
 		fmt.Println(param)
 		*cube = generateRandom5x5x5Array()

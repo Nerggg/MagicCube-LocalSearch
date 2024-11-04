@@ -17,6 +17,7 @@ type SearchRequest struct {
 	MaxIterations      int       `json:"maxIterations,omitempty"`      // Optional field for Simulated Annealing
 	MaxStateGeneration int       `json:"maxStateGeneration,omitempty"` // Optional field for Simulated Annealing
 	RestartChance      float64   `json:"restartChance,omitempty"`      // Optional field for Random Restart Hill Climbing
+	RestartAmount      int       `json:"restartAmount,omitempty"`      // Optional field for Random Restart Hill Climbing
 }
 
 var lastResult map[string]interface{}
@@ -48,10 +49,6 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("Temperature: %f\n", requestData.Temperature)
 			fmt.Printf("Cooling Rate: %f\n", requestData.CoolingRate)
 			fmt.Printf("Max Iterations: %d\n", requestData.MaxIterations)
-		}
-
-		if requestData.Algorithm == "Stochastic Hill Climbing" {
-			fmt.Printf("Max State Generation: %f\n", requestData.Temperature)
 		}
 
 		startTime := time.Now()
@@ -89,7 +86,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		case "Random Restart Hill Climbing":
-			finalState, finalValue, stuckCount, iterOF = randomRestartHillClimbing(&requestData.Cube, requestData.RestartChance/100.0)
+			finalState, finalValue, stuckCount, iterOF = randomRestartHillClimbing(&requestData.Cube, requestData.RestartChance/100.0, requestData.RestartAmount)
 			duration := time.Since(startTime).Milliseconds()
 			fmt.Printf("Duration: %d ms\n", duration)
 			lastResult = map[string]interface{}{
