@@ -68,7 +68,7 @@ export default function Home() {
 
       <div className="flex justify-center pb-[60px] ">
       <div align="center h-[50px]">
-        <h1 className="card text-5xl font-bold typing-animation"><u>Magic Cube</u> Solver</h1>
+        <h1 className="text-5xl font-bold typing-animation"><u>Magic Cube</u> Solver</h1>
       </div>
 
       </div>
