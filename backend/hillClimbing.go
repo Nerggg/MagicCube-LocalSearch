@@ -112,6 +112,7 @@ func randomRestartHillClimbing(cube *[][][]int, p float64, n int) ([][][]int, in
 	iterOF := []int{}
 	var temp int
 	fmt.Println(p)
+	n++
 	i := 0
 	for {
 		*cube, currentValue, temp, iterOF = steepestAscentHillClimbing(cube)
