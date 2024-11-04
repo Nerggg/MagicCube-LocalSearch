@@ -6,6 +6,8 @@ import (
 )
 
 func steepestAscentHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
+	fmt.Println("Konfigurasi awal kubus:")
+	printCube(*cube)
 	iterOF := []int{}
 	currentState := *cube
 	currentValue := calculateObjectiveFunction(currentState)
@@ -32,6 +34,8 @@ func steepestAscentHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
 }
 
 func sidewaysMoveHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
+	fmt.Println("Konfigurasi awal kubus:")
+	printCube(*cube)
 	iterOF := []int{}
 	currentState := *cube
 	currentValue := calculateObjectiveFunction(currentState)
@@ -70,6 +74,8 @@ func sidewaysMoveHillClimbing(cube *[][][]int) ([][][]int, int, int, []int) {
 }
 
 func stochasticHillClimbing(cube *[][][]int, NMax int) ([][][]int, int, int, []int) {
+	fmt.Println("Konfigurasi awal kubus:")
+	printCube(*cube)
 	iterOF := []int{}
 	currentState := *cube
 	currentValue := calculateObjectiveFunction(currentState)
@@ -108,6 +114,8 @@ func stochasticHillClimbing(cube *[][][]int, NMax int) ([][][]int, int, int, []i
 }
 
 func randomRestartHillClimbing(cube *[][][]int, p float64, n int) ([][][]int, int, int, []int, int) {
+	fmt.Println("Konfigurasi awal kubus:")
+	printCube(*cube)
 	var currentValue int
 	iterOF := []int{}
 	var temp int
