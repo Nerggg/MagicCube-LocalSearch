@@ -95,6 +95,76 @@ export default function Magiccube() {
       setErrorMessage(null);
       return;
     }
+
+    // Error handling based on selected algorithm
+    if (activeAlgorithm === 'Genetic Algorithm') {
+      if (!populationSize || populationSize <= 0) {
+        setErrorMessage("Please enter a valid Population Size.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (!maxGenerations || maxGenerations <= 0) {
+        setErrorMessage("Please enter a valid Max Generations.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
+    if (activeAlgorithm === 'Stochastic Hill Climbing') {
+      if (!maxStateGeneration || maxStateGeneration <= 0) {
+        setErrorMessage("Please enter a valid Max State Generation.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
+    if (activeAlgorithm === 'Random Restart Hill Climbing') {
+      if (!restartChance || restartChance <= 0 || restartChance > 100) {
+        setErrorMessage("Please enter a valid Restart Chance (between 1 and 100).");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (!restartAmount || restartAmount <= 0) {
+        setErrorMessage("Please enter a valid Maximum Restart.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
+    if (activeAlgorithm === 'Simulated Annealing') {
+      if (!temperature || temperature <= 0) {
+        setErrorMessage("Please enter a valid Temperature.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (coolingRate == null || coolingRate <= 0 || coolingRate >= 1) {
+        setErrorMessage("Please enter a valid Cooling Rate (between 0 and 1).");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+      if (!maxIterations || maxIterations <= 0) {
+        setErrorMessage("Please enter a valid Max Iterations.");
+        setLoading(false)
+        await delay(1500);
+        setErrorMessage(null);
+        return;
+      }
+    }
+
     setLoading(true);
     try {
       // TODO: frontend request to backend server endpoint
@@ -124,9 +194,9 @@ export default function Magiccube() {
 
 
 // Button style base
-const baseStyle = "mx-4 rounded border-2 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0";
+const baseStyle = "mx-4 rounded border-2 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0 bg-gray-200 text-gray-700 border-gray-300";
 const dynamicStyle = (isActive) => 
-  `${baseStyle} ${isActive ? 'border-neutral-300 text-gray-800 bg-neutral-100' : 'border-neutral-200 text-gray-600 hover:border-neutral-300 hover:bg-neutral-200 hover:text-gray-800'}`;
+  `${baseStyle} ${isActive ? 'border-gray-400 text-gray-900 bg-gray-300' : 'hover:border-gray-400 hover:bg-gray-300 hover:text-gray-900'}`;
 
 return (
   <div className="bg-gray-100 text-gray-800 font-sans pb-12 min-h-screen">
@@ -341,11 +411,14 @@ return (
             </div>
           )}
           {!loading && (
-            <button type="submit"
-              className='mt-4 mx-4 mb-[15px] rounded border-2 border-gray-200 px-7 pb-[8px] pt-[10px] text-sm font-bold uppercase leading-normal text-gray-800 transition duration-150 ease-in-out hover:border-neutral-300 hover:bg-neutral-200 focus:border-neutral-300 focus:text-gray-800 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-gray-600'
-            >
+          <button type="submit"
+              className="mt-4 mx-4 mb-[15px] rounded border-2 border-neutral-300 px-7 pb-[8px] pt-[10px] text-sm font-bold uppercase leading-normal text-gray-700 bg-neutral-200 transition duration-150 ease-in-out 
+              hover:border-neutral-400 hover:bg-neutral-300 hover:text-gray-900 
+              focus:border-neutral-400 focus:bg-neutral-300 focus:text-gray-900 focus:outline-none focus:ring-0 
+              active:border-neutral-500 active:bg-neutral-400 active:text-gray-80"
+          >
               Submit!
-            </button>
+          </button>
           )}
         </div>
       </form>
@@ -439,6 +512,16 @@ return (
             </div>
           </div>
           <p className="text-gray-800 text-center my-4 text-xl">Found <strong>{activeAlgorithm}</strong> solution in <strong>{(results.duration / 1000).toFixed(2)} seconds</strong>!</p>
+          <p className="text-gray-800 text-center mb-4 text-xl">Final State Objective Value: <strong>{results.finalValue}</strong></p>
+          {(activeAlgorithm === 'Steepest Ascent Hill Climbing' || activeAlgorithm === 'Stochastic Hill Climbing' || activeAlgorithm === 'Sideways Move Hill Climbing' || activeAlgorithm === 'Genetic Algorithm') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Iterations needed: <strong>{results.iterOF.length}</strong></p>
+          )}
+           {(activeAlgorithm === 'Genetic Algorithm') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Population Size: <strong>{results.populationSize}</strong></p>
+          )}
+           {(activeAlgorithm === 'Simulated Annealing') &&(
+            <p className="text-gray-800 text-center mb-4 text-xl">Stucks Count: <strong>{results.stuckCount}</strong></p>
+          )}
           <ObjectiveChart iterOF={results.iterOF} />
         </div>
       )}
